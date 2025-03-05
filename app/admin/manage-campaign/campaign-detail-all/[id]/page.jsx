@@ -407,12 +407,10 @@ export default function CampaignDetail() {
                           imgswl(`${baseUrl}${campaign.slip}`)
                         }
                       >
-                        <Image
+                        <img
                           className="w-12 h-12 object-cover rounded-md border border-gray-300 shadow-sm"
                           src={`${baseUrl}${campaign.slip}`}
                           alt="campaign"
-                          width={48}
-                          height={48}
                         />
                       </a>
                     </td>
