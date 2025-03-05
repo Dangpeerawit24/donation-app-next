@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 export async function GET(req) {
   const { searchParams } = new URL(req.url);
   const code = searchParams.get("code");
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   if (!code) {
     return NextResponse.redirect(new URL("/line?error=LINE login failed", req.url));
@@ -37,9 +38,9 @@ export async function GET(req) {
       httpOnly: false,
     });
 
-    return NextResponse.redirect(new URL("/line/index", req.url));
+    return NextResponse.redirect(new URL(baseUrl+"/line/index", req.url));
   } catch (error) {
     console.error("LINE OAuth Error:", error.response?.data || error.message);
-    return NextResponse.redirect(new URL("/line?error=Failed to authenticate with LINE", req.url));
+    return NextResponse.redirect(new URL(baseUrl+"/line?error=Failed to authenticate with LINE", req.url));
   }
 }
