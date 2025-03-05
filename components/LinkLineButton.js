@@ -12,7 +12,7 @@ export default function LinkLineButton() {
         try {
             // 🔹 ส่งผู้ใช้ไปล็อกอินกับ LINE โดยใช้ Client ID เฉพาะ Link
             const clientId = process.env.NEXT_PUBLIC_LINE_LINK_CLIENT_ID;
-            const redirectUri = "http://localhost:3000/link-line-callback"; // 🔹 Callback สำหรับ Link
+            const redirectUri = process.env.NEXT_PUBLIC_LINE_LINK_URI;; // 🔹 Callback สำหรับ Link
             const state = Math.random().toString(36).substring(7);
 
             const lineAuthUrl = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&state=${state}&scope=profile%20openid%20email`;
