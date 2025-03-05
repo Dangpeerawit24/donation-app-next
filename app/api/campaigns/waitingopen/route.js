@@ -19,7 +19,7 @@ export async function GET(req) {
     async start(controller) {
       const sendData = async () => {
         const campaigns = await prisma.$queryRaw`
-        SELECT * FROM campaign WHERE status = "รอเปิด"
+        SELECT * FROM Campaign WHERE status = "รอเปิด"
       `;
 
         controller.enqueue(encoder.encode(`data: ${JSON.stringify(campaigns)}\n\n`));

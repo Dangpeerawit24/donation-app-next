@@ -10,8 +10,8 @@ const prisma = new PrismaClient();
 export async function GET() {
   const campaigns = await prisma.$queryRaw`
         SELECT c.*, COALESCE(SUM(ct.value), 0) AS total_value
-        FROM campaign c
-        LEFT JOIN campaign_transactions ct ON c.id = ct.campaignsid
+        FROM Campaign c
+        LEFT JOIN Campaign_transactions ct ON c.id = ct.campaignsid
         GROUP BY c.id
       `;
 

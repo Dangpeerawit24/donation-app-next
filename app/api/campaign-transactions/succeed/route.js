@@ -13,7 +13,7 @@ export async function GET(req) {
   const id = parseInt(searchParams.get("id"), 10);
 
   const campaigns = await prisma.$queryRaw`
-              SELECT * FROM campaign_transactions WHERE campaignsid = ${id} AND status != "รอดำเนินการ"
+              SELECT * FROM Campaign_transactions WHERE campaignsid = ${id} AND status != "รอดำเนินการ"
             `;
 
  return NextResponse.json(campaigns);

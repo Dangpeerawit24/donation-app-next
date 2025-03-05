@@ -9,13 +9,13 @@ export async function GET() {
   c.*, 
   COUNT(camp.id) AS total_campaigns, 
   COALESCE(SUM(COALESCE(trans.total_value, 0) * COALESCE(camp.price, 0)), 0) AS total_value_price
-  FROM topic AS c
-  LEFT JOIN campaign AS camp ON c.id = camp.topicId
+  FROM Topic AS c
+  LEFT JOIN Campaign AS camp ON c.id = camp.topicId
   LEFT JOIN (
   SELECT 
   campaignsid, 
   SUM(value) AS total_value
-  FROM campaign_transactions
+  FROM Campaign_transactions
   GROUP BY campaignsid
   ) AS trans ON camp.id = trans.campaignsid
   GROUP BY c.id, c.name;
