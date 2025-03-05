@@ -10,7 +10,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 export default function FormPage() {
   const router = useRouter();
   const { id } = useParams();
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(2);
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [campaigns, setCampaigns] = useState([]);
@@ -381,7 +381,7 @@ export default function FormPage() {
       className="w-screen min-w-[375px] max-w-[425px] min-h-[60vh] p-0 m-0 flex flex-col bg-cover bg-top bg-no-repeat"
       style={{ backgroundImage: "url('/img/Background.png')" }}
     >
-      <div className="grid grid-cols-1 py-6 px-4">
+      <div className="grid grid-cols-1 py-2 px-4">
         <div className="relative mt-6 flex w-full justify-between xs-mt-10">
           {["ข้อมูลกองบุญ", "กรอกข้อมูล", "ชำระเงิน", "สำเร็จ"].map((label, index) => (
             <div key={index} className="relative mt-4 flex flex-col items-center w-full z-20">
@@ -406,7 +406,7 @@ export default function FormPage() {
         </div>
       </div>
 
-      <div className="w-full items-center px-6">
+      <div className="w-full items-center px-6 mt-4">
         {step === 1 && (
           <div className="w-full min-h-[60vh]">
             <h2 className="w-full text-xl font-bold text-center mt-12 xs-mt-16">ร่วมบุญกองบุญ</h2>

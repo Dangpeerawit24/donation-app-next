@@ -11,7 +11,7 @@ export default function FormPage() {
   const router = useRouter();
   const { id } = useParams();
   // ตั้งค่า step เป็น 5 ขั้นตอน
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(2);
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [campaigns, setCampaigns] = useState([]);
@@ -349,7 +349,7 @@ export default function FormPage() {
       style={{ backgroundImage: "url('/img/Background.png')" }}
     >
       {/* Progress Indicator: 5 ขั้นตอน */}
-      <div className="grid grid-cols-1 py-6 px-4">
+      <div className="grid grid-cols-1 py-2 px-4">
         <div className="relative mt-6 flex w-full justify-between xs-mt-10">
           {[
             "ข้อมูลกองบุญ",
@@ -380,7 +380,7 @@ export default function FormPage() {
         </div>
       </div>
 
-      <div className="w-full items-center px-6">
+      <div className="w-full items-center px-6 mt-4">
         {/* Step 1: ข้อมูลกองบุญ */}
         {step === 1 && (
           <div className="w-full min-h-[60vh]">

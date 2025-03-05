@@ -32,7 +32,6 @@ export default function ManageCampaign() {
   }, [session, status, router]);
 
   const fetchdata = async () => {
-    setLoading(true);
     try {
       const res = await fetch("/api/campaigns");
       const data = await res.json();
@@ -45,7 +44,12 @@ export default function ManageCampaign() {
   };
 
   useEffect(() => {
-    fetchdata()
+      
+    fetchdata();
+  
+    const intervalId = setInterval(fetchdata, 5000);
+  
+    return () => clearInterval(intervalId);
   }, []);
 
   if (typeof window !== "undefined") {

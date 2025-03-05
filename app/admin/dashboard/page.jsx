@@ -6,6 +6,10 @@ import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import Navbar from "@/components/Navbar";
 import ScrollToTop from "@/components/ScrollToTop";
+import ReactDOM from "react-dom/client";
+import { X } from "lucide-react";
+
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export default function AdminDashboard() {
   const { data: session, status } = useSession();
@@ -14,7 +18,7 @@ export default function AdminDashboard() {
   const [campaignCountYear, setcampaignCountYear] = useState(true);
   const [total_value_year, settotal_value_year] = useState(true);
   const [total_value_month, settotal_value_month] = useState(true);
-  const [Campaigns, setCampaigns] = useState(true);
+  const [Campaigns, setCampaigns] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -31,6 +35,27 @@ export default function AdminDashboard() {
       setLoading(false);
     }
   }, [session, status, router]);
+
+  const fetchdata = async () => {
+    try {
+      const res = await fetch("/api/dashboard/campaigns");
+      const data = await res.json();
+      setCampaigns(data);
+      setLoading(false);
+    } catch (error) {
+      console.error("เกิดข้อผิดพลาดในการดึงข้อมูลสมาชิก:", error);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+      
+    fetchdata();
+  
+    const intervalId = setInterval(fetchdata, 5000);
+  
+    return () => clearInterval(intervalId);
+  }, []);
 
   const fetchtotal_campaign_month = async () => {
     try {
@@ -77,16 +102,16 @@ export default function AdminDashboard() {
       fetchtotal_campaign_year();
       fetchtotal_value_month();
     };
-  
-    
+
+
     fetchData();
-  
-    
+
+
     const intervalId = setInterval(fetchData, 5000);
-  
+
     return () => clearInterval(intervalId);
   }, []);
-  
+
 
 
   if (loading) {
@@ -102,6 +127,36 @@ export default function AdminDashboard() {
       </div>
     );
   }
+
+  const imgswl = async (img) => {
+    await Swal.fire({
+      html: `
+        <div class="flex flex-col items-end">
+          <div id="close-btn-container"></div>
+          <div class="flex flex-col items-center">
+            <img class="rounded-lg shadow-lg max-w-full" src="${img}" alt="img" />
+          </div>
+        </div>
+      `,
+      showConfirmButton: false, // 🔹 ซ่อนปุ่ม OK
+      didOpen: () => {
+        const closeBtnContainer = document.getElementById(
+          "close-btn-container"
+        );
+        if (closeBtnContainer) {
+          const root = ReactDOM.createRoot(closeBtnContainer);
+          root.render(
+            <X
+              size={28}
+              id="close-btn"
+              className="cursor-pointer text-gray-500 hover:text-gray-700"
+              onClick={() => Swal.close()}
+            />
+          );
+        }
+      },
+    });
+  };
 
   return (
     <div className="min-h-screen pt-16 bg-gray-100">
@@ -135,16 +190,82 @@ export default function AdminDashboard() {
 
           <div className="bg-white  p-6 rounded-lg shadow-md text-center">
             <h3 className="text-lg text-start font-semibold text-gray-800 ">
-            จำนวนกองบุญ (เดือนนี้)
+              จำนวนกองบุญ (เดือนนี้)
             </h3>
             <p className="mt-2 text-4xl font-bold text-red-600 ">{campaignCountMonth}</p>
           </div>
 
           <div className="bg-white  p-6 rounded-lg shadow-md text-center">
             <h3 className="text-lg text-start font-semibold text-gray-800 ">
-            จำนวนกองบุญ (ปีนี้)
+              จำนวนกองบุญ (ปีนี้)
             </h3>
             <p className="mt-2 text-4xl font-bold text-red-600 ">{campaignCountYear}</p>
+          </div>
+        </div>
+
+        <div>
+          <h1 className="mt-10 text-xl">กองบุญที่ยังเปิดให้ร่วมบุญ</h1>
+          <div className="overflow-x-auto mt-2">
+            <div className="overflow-auto rounded-lg shadow-xl">
+              <table className="min-w-full border-collapse bg-white rounded-lg shadow-md">
+                <thead className="bg-white  text-gray-700 ">
+                  <tr>
+                    <th className="p-4 w-[5%] text-center">#</th>
+                    <th className="p-4 w-[10%] text-center">รูป</th>
+                    <th className="p-4 text-left">ชื่อกองบุญ</th>
+                    <th className="p-4 w-[10%] text-center">ราคา</th>
+                    <th className="p-4 w-[10%] text-center">จำนวนที่เปิดรับ</th>
+                    <th className="p-4 w-[10%] text-center">ยอดร่วมบุญ</th>
+                    <th className="p-4 w-[15%] text-center">คงเหลือร่วมบุญได้</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {Campaigns.map((campaign, index) => (
+                    <tr
+                      key={campaign.id}
+                      className="hover:bg-gray-100 transition rounded-lg shadow-md"
+                    >
+                      <td className="p-4 text-center">{index + 1}</td>
+                      <td className="p-4 text-center items-center">
+                        <a
+                          className="flex justify-center"
+                          href="#"
+                          onClick={() =>
+                            imgswl(`${baseUrl}${campaign.campaign_img}`)
+                          }
+                        >
+                          <img
+                            className="w-12 h-12 object-cover rounded-md border border-gray-300 shadow-sm"
+                            src={`${baseUrl}${campaign.campaign_img}`}
+                            alt="campaign"
+                          />
+                        </a>
+                      </td>
+                      <td className="p-4">
+                      {campaign.price === 1 && (
+                        <a className="text-blue-600 text-lg" href={`/admin/manage-campaign/campaign-detail-all/${campaign.id}`}>{campaign.name}</a>
+                      )}
+                      {campaign.price > 1 && (
+                        <a className="text-blue-600 text-lg" href={`/admin/manage-campaign/campaign-detail/${campaign.id}`}>{campaign.name}</a>
+                      )}
+                      </td>
+                      <td className="p-4 text-center">
+                        {campaign.price === 1 ? "ตามกำลังศรัทธา" : campaign.price}
+                      </td>
+                      <td className="p-4 text-center">
+                        {campaign.price === 1 ? "ตามกำลังศรัทธา" : campaign.stock}
+                      </td>
+                      <td className="p-4 text-center">
+                        {campaign.price === 1 ? campaign.total_donated + " (บาท)" : campaign.total_donated}
+                      </td>
+                      <td className="p-4 text-center">
+                        {campaign.remaining_stock}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </main>

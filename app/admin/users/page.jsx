@@ -27,7 +27,6 @@ export default function UserManagement() {
   }, [session, status, router]);
 
   const fetchUsers = async () => {
-    setLoading(true);
     try {
       const res = await fetch("/api/users");
       const data = await res.json();
@@ -40,7 +39,12 @@ export default function UserManagement() {
   };
 
   useEffect(() => {
-    fetchUsers()
+      
+    fetchUsers();
+  
+    const intervalId = setInterval(fetchUsers, 5000);
+  
+    return () => clearInterval(intervalId);
   }, []);
 
   // ✅ เพิ่มสมาชิกใหม่

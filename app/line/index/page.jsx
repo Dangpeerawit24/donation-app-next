@@ -7,10 +7,13 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-export default function Home() {
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
+const PushImages = () => {
     const router = useRouter();
     const [profile, setProfile] = useState(null);
     const [campaigns, setCampaigns] = useState([]);
+    const [currentIndex, setCurrentIndex] = useState(0);
 
     const redirectToLineLogin = () => {
         const clientId = process.env.NEXT_PUBLIC_LINE_LOGIN_CLIENT_ID;
@@ -32,80 +35,147 @@ export default function Home() {
 
         setProfile(JSON.parse(userProfile));
 
-        axios
-            .get("/api/line/campaigns")
-            .then((response) => setCampaigns(response.data))
-            .catch((error) => console.error("Error fetching campaigns:", error));
     }, []);
 
+
+    const fetchdata = async () => {
+        try {
+            const res = await fetch("/api/line/campaigns");
+            const data = await res.json();
+            setCampaigns(data);
+        } catch (error) {
+            console.error("เกิดข้อผิดพลาดในการดึงข้อมูลสมาชิก:", error);
+        }
+    };
+
+    useEffect(() => {
+
+        fetchdata();
+
+        const intervalId = setInterval(fetchdata, 5000);
+
+        return () => clearInterval(intervalId);
+    }, []);
+
+    const nextCampaign = () => {
+        if (currentIndex < campaigns.length - 1) {
+            setCurrentIndex(currentIndex + 1);
+        }
+    };
+
+    const prevCampaign = () => {
+        if (currentIndex > 0) {
+            setCurrentIndex(currentIndex - 1);
+        }
+    };
+
+    const campaign = campaigns[currentIndex];
+
     return (
-        <div className="bg-gray-300 w-screen min-w-[375px] max-w-[425px] min-h-screen">
-            {/* Navbar */}
-            <nav className="w-full h-20 bg-red-950 flex items-center px-5">
-                <h3 className="text-white text-2xl ml-2">ศาลพระโพธิสัตว์กวนอิมทุ่งพิชัย</h3>
-            </nav>
-            <div className="px-4 overflow-y-auto overflow-x-hidden" >
-                {/* Campaign List */}
-                <div className="w-full grid grid-cols-2 my-10">
-                    {campaigns.length === 0 ? (
-                        <p className="text-xl text-gray-500">
-                            ขออภัย ไม่มีกองบุญที่เปิดให้ร่วมบุญในขณะนี้
-                        </p>
-                    ) : (
-                        campaigns.map((campaign) => (
-                            <div
-                                key={campaign.id}
-                                className="max-w-sm p-6 mb-4 bg-white border rounded-3xl shadow"
-                            >
+        <>
+            <div
+                className="w-screen min-w-[375px] max-w-[425px] min-h-screen bg-cover bg-no-repeat px-0 m-0 flex flex-col"
+                style={{ backgroundImage: "url('/img/Background2.png')" }}
+            >
 
+                <div className="row w-full h-20 top-0 bg-red-950 content-center justify-items-center">
+                    <nav className="flex items-center">
+                        <img src="https://donation.kuanimtungpichai.com/img/AdminLogo.png" width="50px" height="50px" alt="" />
+                        <h3 className=" mx-2 text-white text-xl">ศาลพระโพธิสัตว์กวนอิมทุ่งพิชัย</h3>
+                    </nav>
+                </div>
+                {campaigns.length !== 0 && (
+                    <>
+                        <h1 className="mt-4 text-xl text-center">กองบุญที่เปิดให้ร่วมบุญขณะนี้</h1>
 
+                        <div className="mt-4 max-w-[425px] contain-content px-4 overflow-y-auto">
+                            <div className="w-full px-6 pb-6 rounded-3xl shadow-lg ">
+                                <h2 className="text-xl text-center break-words">กองบุญ<br />{campaign.name}</h2>
+                                {campaign.campaign_img && (
+                                    <div className="flex justify-center mt-4">
+                                        {campaign.price !== 1 && (
+                                            <Link href={`/line/form/campaigns/${campaign.id}`}>
+                                                <Image
+                                                    src={campaign.campaign_img}
+                                                    width={500}
+                                                    height={500}
+                                                    alt="Campaign Image"
+                                                    className="rounded-2xl"
+                                                    priority
+                                                />
+                                            </Link>
+                                        )}
+                                        {campaign.price === 1 && (
+                                            <Link href={`/line/formall/campaigns/${campaign.id}`}>
+                                                <Image
+                                                    src={campaign.campaign_img}
+                                                    width={500}
+                                                    height={500}
+                                                    alt="Campaign Image"
+                                                    className="rounded-2xl"
+                                                    priority
+                                                />
+                                            </Link>
+                                        )}
+                                    </div>
+                                )}
+                                <Image className="mt-4 w-full" src="/img/Asset 279.png" width={500} height={500} alt="Campaign" />
+                                <p className="mt-4 text-center text-lg">
+                                    ร่วมบุญ {campaign.price === 1 ? "ตามกำลังศรัทธา" : `${campaign.price} บาท`}
+                                </p>
+                                {campaign.price !== 1 && (
+                                    <p className="text-center text-md">รับเจ้าภาพจำนวน {campaign.stock} กองบุญ</p>
+                                )}
+                                <h2 className="text-lg text-start break-words">{campaign.description}</h2>
 
                                 {campaign.price !== 1 && (
                                     <Link href={`/line/form/campaigns/${campaign.id}`}>
-                                        <Image
-                                            src={campaign.campaign_img}
-                                            width={500}
-                                            height={500}
-                                            alt="Campaign Image"
-                                            className="rounded-2xl"
-                                            priority
-                                        />
+                                        <button className="w-full flex items-center justify-center gap-2 mt-4 py-3 px-6 bg-[#742F1E] font-semibold text-white rounded-full shadow-md">
+                                            ร่วมบุญ
+                                        </button>
                                     </Link>
                                 )}
                                 {campaign.price === 1 && (
                                     <Link href={`/line/formall/campaigns/${campaign.id}`}>
-                                        <Image
-                                            src={campaign.campaign_img}
-                                            width={500}
-                                            height={500}
-                                            alt="Campaign Image"
-                                            className="rounded-2xl"
-                                            priority
-                                        />
+                                        <button className="w-full flex items-center justify-center gap-2 mt-4 py-3 px-6 bg-[#742F1E] font-semibold text-white rounded-full shadow-md">
+                                            ร่วมบุญ
+                                        </button>
                                     </Link>
                                 )}
-
                             </div>
-                        ))
-                    )}
-                </div>
-            </div>
-            <div className="fixed w-screen min-w-[375px] max-w-[425px] bottom-0 h-20 bg-red-950 text-white flex justify-around items-center">
-                <div className="text-center">
-                    <Link href="/">
-                        <i className="fa-solid fa-house fa-xl"></i>
-                    </Link>
-                    <h3 className="mt-1">หน้าหลัก</h3>
-                </div>
-                {profile && (
-                    <div className="text-center">
-                        <Link href={`/campaignstatus?userId=${profile.userId}`}>
-                            <i className="fa-solid fa-clipboard-list fa-xl"></i>
-                        </Link>
-                        <h3 className="mt-1">สถานะกองบุญ</h3>
-                    </div>
+
+                            <div className="flex justify-between px-6 py-4">
+                                <button
+                                    onClick={prevCampaign}
+                                    disabled={currentIndex === 0}
+                                    className={`py-3 px-6 rounded-full shadow-md ${currentIndex === 0 ? "bg-[#742F1E]" : "bg-[#742F1E] text-white"
+                                        }`}
+                                >
+                                    ◄ กลับ
+                                </button>
+                                <button
+                                    onClick={nextCampaign}
+                                    disabled={currentIndex === campaigns.length - 1}
+                                    className={`py-3 px-6 rounded-full shadow-md ${currentIndex === campaigns.length - 1 ? "bg-[#742F1E]" : "bg-[#742F1E] text-white"
+                                        }`}
+                                >
+                                    ถัดไป ►
+                                </button>
+                            </div>
+                        </div>
+                    </>
+                )}
+
+                {campaigns.length === 0 && (
+                    <>
+                        <div className="flex items-center justify-center min-h-screen bg-gray-300">
+                            <p className="text-xl text-gray-500">ไม่มีกองบุญที่เปิดให้ร่วมบุญในขณะนี้</p>
+                        </div>
+                    </>
                 )}
             </div>
-        </div>
+        </>
     );
-}
+};
+
+export default PushImages;

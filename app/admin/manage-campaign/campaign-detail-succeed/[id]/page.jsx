@@ -38,7 +38,6 @@ export default function CampaignDetail() {
 
 
   const fetchdata = async () => {
-    setLoading(true);
     try {
       const res = await fetch(`/api/campaign-transactions/succeed?id=${id}`);
       const data = await res.json();
@@ -51,7 +50,12 @@ export default function CampaignDetail() {
   };
 
   useEffect(() => {
+      
     fetchdata();
+  
+    const intervalId = setInterval(fetchdata, 5000);
+  
+    return () => clearInterval(intervalId);
   }, []);
 
   const fetachName = async (id) => {

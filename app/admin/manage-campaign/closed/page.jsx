@@ -34,7 +34,6 @@ export default function CampaignClosed() {
 
 
   const fetchdata = async () => {
-    setLoading(true);
     try {
       const res = await fetch("/api/campaigns/closed");
       const data = await res.json();
@@ -47,7 +46,12 @@ export default function CampaignClosed() {
   };
 
   useEffect(() => {
-    fetchdata()
+      
+    fetchdata();
+  
+    const intervalId = setInterval(fetchdata, 5000);
+  
+    return () => clearInterval(intervalId);
   }, []);
 
   const handleEditCampaign = async (campaign) => {

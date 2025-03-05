@@ -27,7 +27,6 @@ export default function ManageTopic() {
   }, [session, status, router]);
 
   const fetchdata = async () => {
-    setLoading(true);
     try {
       const res = await fetch("/api/topics");
       const data = await res.json();
@@ -40,7 +39,12 @@ export default function ManageTopic() {
   };
 
   useEffect(() => {
-    fetchdata()
+      
+    fetchdata();
+  
+    const intervalId = setInterval(fetchdata, 5000);
+  
+    return () => clearInterval(intervalId);
   }, []);
 
   // ✅ เพิ่มสมาชิกใหม่
