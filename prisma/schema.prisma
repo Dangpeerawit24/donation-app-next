@@ -48,12 +48,12 @@ model Campaign_transactions {
 }
 
 model Line_users {
-  id        Int  @id @default(autoincrement())
-  user_id      String
-  display_name      String
-  picture_url      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt()
+  id           Int      @id @default(autoincrement())
+  user_id      String   @unique
+  display_name String
+  picture_url  String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt()
 }
 
 model Campaign {
