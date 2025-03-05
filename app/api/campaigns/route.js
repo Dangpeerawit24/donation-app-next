@@ -9,10 +9,13 @@ const prisma = new PrismaClient();
 // ✅ อ่านข้อมูลสมาชิกทั้งหมด
 export async function GET() {
   const campaigns = await prisma.$queryRaw`
-        SELECT c.*, COALESCE(SUM(ct.value), 0) AS total_value
-        FROM Campaign c
-        LEFT JOIN Campaign_transactions ct ON c.id = ct.campaignsid
-        GROUP BY c.id
+        SELECT 
+    c.*, 
+    COALESCE(SUM(ct.value), 0) AS total_value
+  FROM Campaign c
+  LEFT JOIN Campaign_transactions ct ON c.id = ct.campaignsid
+  WHERE c.status = 'เปิดกองบุญ'
+  GROUP BY c.id
       `;
 
   return NextResponse.json(campaigns);

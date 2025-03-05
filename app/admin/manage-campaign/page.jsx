@@ -440,13 +440,22 @@ export default function ManageCampaign() {
           จัดการข้อมูลกองบุญ
         </h1>
 
-        <div className="flex justify-end mb-4">
-          <button
-            onClick={handleAddUser}
-            className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
-          >
-            + เพิ่มกองบุญใหม่
-          </button>
+        <div className="flex justify-between items-center mb-4">
+          <div className="flex gap-2">
+            <button
+              onClick={() =>
+                (window.location.href = `/admin/manage-campaign/closed`)
+              }
+              className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">กองบุญที่ปิดแล้ว</button>
+          </div>
+          <div>
+            <button
+              onClick={handleAddUser}
+              className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
+            >
+              + เพิ่มกองบุญใหม่
+            </button>
+          </div>
         </div>
 
         <div className="overflow-x-auto">

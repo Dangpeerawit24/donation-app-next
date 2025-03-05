@@ -12,52 +12,18 @@ if (!global.userEvent) {
 }
 const userEvent = global.userEvent;
 
-// ✅ อ่านข้อมูลสมาชิกทั้งหมด
-export async function GET(req) {
-  const encoder = new TextEncoder();
-  const stream = new ReadableStream({
-    async start(controller) {
-      const sendData = async () => {
-        const campaigns = await prisma.$queryRaw`
-        SELECT * FROM Campaign WHERE status = "ปิดกองบุญแล้ว"
+export async function GET() {
+  const campaigns = await prisma.$queryRaw`
+        SELECT 
+    c.*, 
+    COALESCE(SUM(ct.value), 0) AS total_value
+  FROM Campaign c
+  LEFT JOIN Campaign_transactions ct ON c.id = ct.campaignsid
+  WHERE c.status = 'ปิดกองบุญแล้ว'
+  GROUP BY c.id
       `;
 
-        controller.enqueue(encoder.encode(`data: ${JSON.stringify(campaigns)}\n\n`));
-      };
-
-      await sendData();
-
-      userEvent.removeAllListeners("update");
-      userEvent.on("update", () => {
-        console.log("Update event triggered");
-      });
-      
-      userEvent.on("update", sendData);
-
-      return () => {
-        isConnectionOpen = false;
-        clearInterval(heartbeat);
-      
-        // ✅ ป้องกันการเรียก enqueue() หลังจากปิดไปแล้ว
-        try {
-          controller.close();
-        } catch (error) {
-          console.warn("⚠️ Controller ปิดอยู่แล้ว", error);
-        }
-      
-        console.log("❌ SSE Connection Closed");
-      };
-      
-    },
-  });
-
-  return new Response(stream, {
-    headers: {
-      "Content-Type": "text/event-stream",
-      "Cache-Control": "no-cache",
-      Connection: "keep-alive",
-    },
-  });
+  return NextResponse.json(campaigns);
 }
 
 // ✅ เพิ่มสมาชิกใหม่

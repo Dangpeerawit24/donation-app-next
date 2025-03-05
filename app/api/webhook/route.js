@@ -20,7 +20,7 @@ export async function POST(req) {
           const profile = await getProfile(userId);
           if (profile) {
             // บันทึกข้อมูลลงฐานข้อมูล
-            await prisma.lineUser.upsert({
+            await prisma.line_user.upsert({
               where: { user_id: userId },
               update: {
                 display_name: profile.displayName,

@@ -10,6 +10,10 @@ import ScrollToTop from "@/components/ScrollToTop";
 export default function AdminDashboard() {
   const { data: session, status } = useSession();
   const [loading, setLoading] = useState(true);
+  const [campaignCountMonth, setcampaignCountMonth] = useState(true);
+  const [campaignCountYear, setcampaignCountYear] = useState(true);
+  const [total_value_year, settotal_value_year] = useState(true);
+  const [total_value_month, settotal_value_month] = useState(true);
   const [Campaigns, setCampaigns] = useState(true);
   const router = useRouter();
 
@@ -27,6 +31,62 @@ export default function AdminDashboard() {
       setLoading(false);
     }
   }, [session, status, router]);
+
+  const fetchtotal_campaign_month = async () => {
+    try {
+      const res = await fetch("/api/dashboard/total_campaign_month");
+      const data = await res.json();
+      setcampaignCountMonth(data);
+    } catch (error) {
+      console.error("เกิดข้อผิดพลาดในการดึงข้อมูลสมาชิก:", error);
+    }
+  };
+  const fetchtotal_value_month = async () => {
+    try {
+      const res = await fetch("/api/dashboard/total_value_month");
+      const data = await res.json();
+      settotal_value_month(data);
+    } catch (error) {
+      console.error("เกิดข้อผิดพลาดในการดึงข้อมูลสมาชิก:", error);
+    }
+  };
+  const fetchtotal_campaign_year = async () => {
+    try {
+      const res = await fetch("/api/dashboard/total_campaign_year");
+      const data = await res.json();
+      setcampaignCountYear(data);
+    } catch (error) {
+      console.error("เกิดข้อผิดพลาดในการดึงข้อมูลสมาชิก:", error);
+    }
+  };
+  const fetchtotal_value_year = async () => {
+    try {
+      const res = await fetch("/api/dashboard/total_value_year");
+      const data = await res.json();
+      settotal_value_year(data);
+    } catch (error) {
+      console.error("เกิดข้อผิดพลาดในการดึงข้อมูลสมาชิก:", error);
+    }
+  };
+
+  useEffect(() => {
+    // ฟังก์ชันเรียกข้อมูล
+    const fetchData = () => {
+      fetchtotal_campaign_month();
+      fetchtotal_value_year();
+      fetchtotal_campaign_year();
+      fetchtotal_value_month();
+    };
+  
+    
+    fetchData();
+  
+    
+    const intervalId = setInterval(fetchData, 5000);
+  
+    return () => clearInterval(intervalId);
+  }, []);
+  
 
 
   if (loading) {
@@ -49,35 +109,42 @@ export default function AdminDashboard() {
       {/* Content */}
       <main className="p-6 ">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-800 ">
-            ยินดีต้อนรับ, {session?.user?.email}
+          <h1 className="text-2xl font-bold text-gray-800 ">
+            Dashboard
+          </h1>
+          <h2 className="text-xl font-bold text-gray-800 ">
+            ยินดีต้อนรับ, {session?.user?.name}
           </h2>
-          <p className="text-gray-600 dark:text-gray-300 mt-2">
-            บทบาท: {session?.user?.role}
-          </p>
         </div>
 
         {/* การ์ดข้อมูล */}
-        <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <div className="bg-white  p-6 rounded-lg shadow-md text-center">
-            <h3 className="text-lg font-semibold text-gray-800 ">
-              จำนวนผู้ใช้
+            <h3 className="text-lg text-start font-semibold text-gray-800 ">
+              ยอดรวมรายรับ (เดือนนี้)
             </h3>
-            <p className="text-2xl font-bold text-blue-600">1,234</p>
+            <p className="mt-2 text-4xl font-bold text-green-600 ">{total_value_month}</p>
           </div>
 
           <div className="bg-white  p-6 rounded-lg shadow-md text-center">
-            <h3 className="text-lg font-semibold text-gray-800 ">
-              ยอดขายวันนี้
+            <h3 className="text-lg text-start font-semibold text-gray-800 ">
+              ยอดรวมรายรับ (ปีนี้)
             </h3>
-            <p className="text-2xl font-bold text-green-600">฿25,000</p>
+            <p className="mt-2 text-4xl font-bold text-green-600 ">{total_value_year}</p>
           </div>
 
           <div className="bg-white  p-6 rounded-lg shadow-md text-center">
-            <h3 className="text-lg font-semibold text-gray-800 ">
-              คำสั่งซื้อที่รอดำเนินการ
+            <h3 className="text-lg text-start font-semibold text-gray-800 ">
+            จำนวนกองบุญ (เดือนนี้)
             </h3>
-            <p className="text-2xl font-bold text-orange-600">15</p>
+            <p className="mt-2 text-4xl font-bold text-red-600 ">{campaignCountMonth}</p>
+          </div>
+
+          <div className="bg-white  p-6 rounded-lg shadow-md text-center">
+            <h3 className="text-lg text-start font-semibold text-gray-800 ">
+            จำนวนกองบุญ (ปีนี้)
+            </h3>
+            <p className="mt-2 text-4xl font-bold text-red-600 ">{campaignCountYear}</p>
           </div>
         </div>
       </main>
