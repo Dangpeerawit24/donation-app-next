@@ -67,9 +67,9 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen p-4 items-center justify-center bg-gray-100 dark:bg-gray-900">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white dark:bg-gray-800 shadow-md rounded-lg">
-        <h1 className="text-2xl font-bold text-center text-gray-900 dark:text-white">
+    <div className="flex min-h-screen p-4 items-center justify-center bg-gray-100 ">
+      <div className="w-full max-w-md p-8 space-y-6 bg-white  shadow-md rounded-lg">
+        <h1 className="text-2xl font-bold text-center text-gray-900 ">
           เข้าสู่ระบบกองบุญออนไลน์
         </h1>
 
@@ -77,7 +77,7 @@ export default function LoginPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-gray-700 dark:text-gray-300">
+            <label className="block text-gray-700 ">
               Email
             </label>
             <input
@@ -86,12 +86,12 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 dark:text-gray-300">
+            <label className="block text-gray-700 ">
               Password
             </label>
             <input
@@ -100,7 +100,7 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -113,9 +113,9 @@ export default function LoginPage() {
         </form>
 
         <div className="flex items-center justify-between">
-          <hr className="w-full border-gray-300 dark:border-gray-600" />
-          <span className="px-2 text-gray-500 dark:text-gray-400">หรือ</span>
-          <hr className="w-full border-gray-300 dark:border-gray-600" />
+          <hr className="w-full border-gray-300" />
+          <span className="px-2 text-gray-500 ">หรือ</span>
+          <hr className="w-full border-gray-300 " />
         </div>
 
         <LoginButton />
