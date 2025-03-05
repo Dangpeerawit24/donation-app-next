@@ -19,15 +19,15 @@ export async function POST(req) {
           // ดึงข้อมูลโปรไฟล์จาก LINE API
           const profile = await getProfile(userId);
           if (profile) {
-            // บันทึกข้อมูลลงฐานข้อมูล
-            await prisma.line_user.upsert({
+            // บันทึกข้อมูลลงฐานข้อมูล (ใช้ upsert กับ model Line_users)
+            await prisma.line_users.upsert({
               where: { user_id: userId },
               update: {
                 display_name: profile.displayName,
                 picture_url: profile.pictureUrl ?? null,
               },
               create: {
-                userId: userId,
+                user_id: userId,
                 display_name: profile.displayName,
                 picture_url: profile.pictureUrl ?? null,
               },
