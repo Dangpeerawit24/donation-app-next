@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("NEXT_PUBLIC_DATABASE_URL")
+}
+
+model User {
+  id        String  @id @default(uuid())
+  name      String?
+  email     String  @unique
+  lineuid     String?  @unique
+  password  String
+  role      String  @default("user")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+}
+
+model Campaign_transactions {
+  id        Int  @id @default(autoincrement())
+  campaignsname      String
+  lineId      String?
+  transactionID      String?
+  lineName      String
+  form      String
+  value      String?
+  details      String?
+  detailsname      String?
+  detailsbirthdate      String?
+  detailsbirthmonth      String?
+  detailsbirthyear     String?
+  detailsbirthtime      String?
+  detailsbirthconstellation      String?
+  detailsbirthage      String?
+  detailstext      String?
+  detailswish      String?
+  slip      String?
+  url_img      String?
+  qr_url      String?
+  status      String?
+  notify      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+  campaignsid  Int?
+  campaigns    Campaign? @relation(fields: [campaignsid], references: [id])
+}
+
+model Line_users {
+  id        Int  @id @default(autoincrement())
+  user_id      String
+  display_name      String
+  picture_url      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+}
+
+model Campaign {
+  id        Int  @id @default(autoincrement())
+  campaignTransactions   Campaign_transactions[]
+  name      String?
+  description      String?
+  price      Int?
+  respond      String?
+  stock      Int?
+  detailsname      String? @default("false")
+  detailsbirthdate      String? @default("false")
+  detailstext      String? @default("false")
+  detailswish      String? @default("false")
+  campaign_img      String?
+  campaign_imgpush      String?
+  status      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+  topicId  Int?
+  topic    Topic? @relation(fields: [topicId], references: [id])
+}
+
+model Topic {
+  id        Int  @id @default(autoincrement())
+  campaign   Campaign[]
+  name      String
+  status    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+}
