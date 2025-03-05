@@ -52,7 +52,7 @@ export async function POST(req) {
  * ดึงข้อมูลโปรไฟล์ผู้ใช้จาก LINE API
  */
 async function getProfile(userId) {
-  const channelAccessToken = process.env.LINE_CHANNEL_ACCESS_TOKEN;
+  const channelAccessToken = process.env.NEXT_PUBLIC_LINE_CHANNEL_ACCESS_TOKEN;
   try {
     const response = await fetch(`${LINE_API_URL}${userId}`, {
       method: "GET",
