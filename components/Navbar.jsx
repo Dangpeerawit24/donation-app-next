@@ -143,8 +143,8 @@ export default function Navbar() {
 
             {/* Dropdown แจ้งเตือน */}
             {notificationOpen && (
-              <div className="absolute right-0 mt-2 w-64 bg-white border rounded-lg shadow-lg ">
-                <div className="px-4 py-2 border-b ">
+              <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg ">
+                <div className="px-4 py-2 ">
                   <p className="text-sm font-semibold text-gray-900 ">
                     การแจ้งเตือน
                   </p>
@@ -175,7 +175,7 @@ export default function Navbar() {
           <div className="relative hidden xl:block">
             <button
               onClick={toggleDropdown}
-              className="flex items-center gap-2 px-4 py-2 bg-white border rounded-lg shadow-sm hover:bg-gray-100  "
+              className="flex items-center gap-2 px-4 py-2 bg-white rounded-lg shadow-sm hover:bg-gray-100  "
             >
               <span className="font-semibold text-gray-900 ">
                 {session?.user?.name || "ผู้ใช้"}
@@ -185,8 +185,8 @@ export default function Navbar() {
 
             {/* Dropdown รายละเอียดผู้ใช้ */}
             {dropdownOpen && (
-              <div className="absolute right-0 mt-2 w-56 bg-white border rounded-lg shadow-lg ">
-                <div className="px-4 py-2 border-b ">
+              <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg ">
+                <div className="px-4 py-2 ">
                   <p className="text-sm font-semibold text-gray-900 ">
                     {session?.user?.name}
                   </p>

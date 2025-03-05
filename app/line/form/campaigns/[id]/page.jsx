@@ -382,7 +382,7 @@ export default function FormPage() {
       style={{ backgroundImage: "url('/img/Background.png')" }}
     >
       <div className="grid grid-cols-1 py-6 px-4">
-        <div className="relative mt-6 flex w-full justify-between xs:mt-10">
+        <div className="relative mt-6 flex w-full justify-between xs-mt-10">
           {["ข้อมูลกองบุญ", "กรอกข้อมูล", "ชำระเงิน", "สำเร็จ"].map((label, index) => (
             <div key={index} className="relative mt-4 flex flex-col items-center w-full z-20">
               <div
@@ -409,7 +409,7 @@ export default function FormPage() {
       <div className="w-full items-center px-6">
         {step === 1 && (
           <div className="w-full min-h-[60vh]">
-            <h2 className="w-full text-xl font-bold text-center mt-12 xs:mt-16">ร่วมบุญกองบุญ</h2>
+            <h2 className="w-full text-xl font-bold text-center mt-12 xs-mt-16">ร่วมบุญกองบุญ</h2>
             <>{profile?.detailsname}</>
             <h2 className="text-lg font-bold text-center text-wrap">{campaigns.name}</h2>
             {campaigns.campaign_img ? (
@@ -435,7 +435,7 @@ export default function FormPage() {
           <div className="w-full min-h-[60vh]">
             {!numSet && (
               <div>
-                <h2 className="w-full text-xl font-bold text-center mt-12 xs:mt-16">กำหนดจำนวนกองบุญ</h2>
+                <h2 className="w-full text-xl font-bold text-center mt-12 xs-mt-16">กำหนดจำนวนกองบุญ</h2>
               </div>
             )}
             {!numSet ? (
@@ -448,7 +448,7 @@ export default function FormPage() {
               </div>
             ) : (
               <div>
-                <h2 className="w-full text-xl font-bold text-center mt-12 xs:mt-16">กรอกข้อมูลผู้รวมบุญ</h2>
+                <h2 className="w-full text-xl font-bold text-center mt-12 xs-mt-16">กรอกข้อมูลผู้รวมบุญ</h2>
                 <h2 className="w-full text-lg font-bold text-center">( ชุดที่ {currentEntryIndex + 1} จาก {entries.length} )</h2>
                 {campaigns.detailsname === "true" && (
                   <>
@@ -719,7 +719,7 @@ export default function FormPage() {
 
         {step === 3 && (
           <div className="w-full min-h-[60vh]">
-            <h2 className="text-xl font-bold text-[#BD9B5B] text-center mt-14 xs:mt-16">
+            <h2 className="text-xl font-bold text-[#BD9B5B] text-center mt-14 xs-mt-16">
               สแกน QR CODE นี้ เพื่อชำระเงิน
             </h2>
             <p className="text-center text-gray-500">
@@ -769,7 +769,7 @@ export default function FormPage() {
 
         {step === 4 && (
           <div className="w-full min-h-[60vh]">
-            <h2 className="text-xl font-bold text-center mt-12 xs:mt-16">ทำรายการสำเร็จ</h2>
+            <h2 className="text-xl font-bold text-center mt-12 xs-mt-16">ทำรายการสำเร็จ</h2>
             <Image className="my-4 w-full" src="/img/Asset 279.png" width={500} height={500} alt="Success" />
             <p className="px-2 text-center w-full text-wrap text-xl text-gray-700">
               ขอนุโมทนากับคุณ {profile.displayName}

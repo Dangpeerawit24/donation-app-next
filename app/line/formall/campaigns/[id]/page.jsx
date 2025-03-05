@@ -350,7 +350,7 @@ export default function FormPage() {
     >
       {/* Progress Indicator: 5 ขั้นตอน */}
       <div className="grid grid-cols-1 py-6 px-4">
-        <div className="relative mt-6 flex w-full justify-between xs:mt-10">
+        <div className="relative mt-6 flex w-full justify-between xs-mt-10">
           {[
             "ข้อมูลกองบุญ",
             "จำนวนเงิน",
@@ -384,7 +384,7 @@ export default function FormPage() {
         {/* Step 1: ข้อมูลกองบุญ */}
         {step === 1 && (
           <div className="w-full min-h-[60vh]">
-            <h2 className="w-full text-xl font-bold text-center mt-12 xs:mt-16">ร่วมบุญกองบุญ</h2>
+            <h2 className="w-full text-xl font-bold text-center mt-12 xs-mt-16">ร่วมบุญกองบุญ</h2>
             <>{profile?.detailsname}</>
             <h2 className="text-lg font-bold text-center text-wrap">{campaigns.name}</h2>
             {campaigns.campaign_img ? (
@@ -409,7 +409,7 @@ export default function FormPage() {
         {/* Step 2: จำนวนเงินที่ต้องการบริจาค */}
         {step === 2 && (
           <div className="w-full min-h-[60vh]">
-            <h2 className="w-full text-xl font-bold text-center mt-12 xs:mt-16">
+            <h2 className="w-full text-xl font-bold text-center mt-12 xs-mt-16">
               กรอกจำนวนเงินที่ต้องการบริจาค
             </h2>
             <div className="mt-10">
@@ -434,7 +434,7 @@ export default function FormPage() {
         {/* Step 3: กรอกข้อมูลผู้ร่วมบุญ */}
         {step === 3 && (
           <div className="w-full min-h-[60vh]">
-            <h2 className="w-full text-xl font-bold text-center mt-12 xs:mt-16">
+            <h2 className="w-full text-xl font-bold text-center mt-12 xs-mt-16">
               กรอกข้อมูลผู้ร่วมบุญ
             </h2>
             {campaigns.detailsname === "true" && (
@@ -524,7 +524,7 @@ export default function FormPage() {
         {/* Step 4: ชำระเงิน (อัปโหลดสลิป) */}
         {step === 4 && (
           <div className="w-full min-h-[60vh]">
-            <h2 className="text-xl font-bold text-[#BD9B5B] text-center mt-14 xs:mt-16">
+            <h2 className="text-xl font-bold text-[#BD9B5B] text-center mt-14 xs-mt-16">
               สแกน QR CODE นี้ เพื่อชำระเงิน
             </h2>
             <p className="text-center text-gray-500">บันทึกหน้าจอหรือบันทึกรูปภาพเพื่อสแกน</p>
@@ -583,7 +583,7 @@ export default function FormPage() {
         {/* Step 5: สำเร็จ */}
         {step === 5 && (
           <div className="w-full min-h-[60vh]">
-            <h2 className="text-xl font-bold text-center mt-12 xs:mt-16">ทำรายการสำเร็จ</h2>
+            <h2 className="text-xl font-bold text-center mt-12 xs-mt-16">ทำรายการสำเร็จ</h2>
             <Image className="my-4 w-full" src="/img/Asset 279.png" width={500} height={500} alt="Success" />
             <p className="px-2 text-center w-full text-wrap text-xl text-gray-700">
               ขอนุโมทนากับคุณ {profile.displayName}

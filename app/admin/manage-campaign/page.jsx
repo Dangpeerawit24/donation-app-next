@@ -475,12 +475,12 @@ export default function ManageCampaign() {
                         className="flex justify-center"
                         href="#"
                         onClick={() =>
-                          imgswl(`${baseUrl}/${campaign.campaign_img}`)
+                          imgswl(`${baseUrl}${campaign.campaign_img}`)
                         }
                       >
                         <img
                           className="w-12 h-12 object-cover rounded-md border border-gray-300 shadow-sm"
-                          src={`${baseUrl}/${campaign.campaign_img}`}
+                          src={`${baseUrl}${campaign.campaign_img}`}
                           alt="campaign"
                         />
                       </a>
