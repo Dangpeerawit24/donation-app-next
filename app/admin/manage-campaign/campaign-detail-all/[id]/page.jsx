@@ -51,11 +51,11 @@ export default function CampaignDetail() {
   };
 
   useEffect(() => {
-      
+
     fetchdata();
-  
+
     const intervalId = setInterval(fetchdata, 5000);
-  
+
     return () => clearInterval(intervalId);
   }, []);
 
@@ -364,11 +364,11 @@ export default function CampaignDetail() {
           <div className="flex gap-2">
             <button onClick={copyTable} className="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">คัดลอกข้อมูลในตาราง</button>
             <button onClick={exportToExcel} className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">บันทึกเป็น Excel</button>
-            <button 
+            <button
               onClick={() =>
                 (window.location.href = `/admin/manage-campaign/campaign-detail-succeed/${namecampaign.id}`)
-              } 
-            className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">รายการที่ดำเนินการแล้ว</button>
+              }
+              className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">รายการที่ดำเนินการแล้ว</button>
           </div>
           <div>
             <button
@@ -453,12 +453,14 @@ export default function CampaignDetail() {
                         >
                           ส่งรูป
                         </button>
-                        <button
-                          onClick={() => handleDelete(campaign.id)}
-                          className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
-                        >
-                          ลบ
-                        </button>
+                        {campaign.form !== "A" &&
+                          <button
+                            onClick={() => handleDelete(campaign.id)}
+                            className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+                          >
+                            ลบ
+                          </button>
+                        }
                       </div>
                     </td>
                   </tr>

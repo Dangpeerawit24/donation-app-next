@@ -259,7 +259,7 @@ export default function AdminDashboard() {
                         {campaign.price === 1 ? campaign.total_donated + " (บาท)" : campaign.total_donated}
                       </td>
                       <td className="p-4 text-center">
-                        {campaign.remaining_stock}
+                        {campaign.remaining_stock === 999999 ? "ตามกำลังศรัทธา" : campaign.remaining_stock}
                       </td>
                     </tr>
                   ))}
