@@ -113,24 +113,24 @@ export async function POST(req) {
         });
       }
 
-      // ส่งข้อความหลังจากส่งรูปทั้งหมด
-      const textMessage = `ภาพจากกองบุญ\n${campaignsname}\nขออนุโมทนาครับ🙏`;
-      await fetch("https://api.line.me/v2/bot/message/push", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${lineAccessToken}`,
-        },
-        body: JSON.stringify({
-          to: userid,
-          messages: [
-            {
-              type: "text",
-              text: textMessage,
-            },
-          ],
-        }),
-      });
+      // // ส่งข้อความหลังจากส่งรูปทั้งหมด
+      // const textMessage = `ภาพจากกองบุญ\n${campaignsname}\nขออนุโมทนาครับ🙏`;
+      // await fetch("https://api.line.me/v2/bot/message/push", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     Authorization: `Bearer ${lineAccessToken}`,
+      //   },
+      //   body: JSON.stringify({
+      //     to: userid,
+      //     messages: [
+      //       {
+      //         type: "text",
+      //         text: textMessage,
+      //       },
+      //     ],
+      //   }),
+      // });
     }
 
     return new Response(

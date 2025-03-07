@@ -178,14 +178,14 @@ export default function AdminDashboard() {
             <h3 className="text-lg text-start font-semibold text-gray-800 ">
               ยอดรวมรายรับ (เดือนนี้)
             </h3>
-            <p className="mt-2 text-4xl font-bold text-green-600 ">{total_value_month}</p>
+            <p className="mt-2 text-4xl font-bold text-green-600 ">{Number(total_value_month).toLocaleString("th-TH")}</p>
           </div>
 
           <div className="bg-white  p-6 rounded-lg shadow-md text-center">
             <h3 className="text-lg text-start font-semibold text-gray-800 ">
               ยอดรวมรายรับ (ปีนี้)
             </h3>
-            <p className="mt-2 text-4xl font-bold text-green-600 ">{total_value_year}</p>
+            <p className="mt-2 text-4xl font-bold text-green-600 ">{Number(total_value_year).toLocaleString("th-TH")}</p>
           </div>
 
           <div className="bg-white  p-6 rounded-lg shadow-md text-center">
