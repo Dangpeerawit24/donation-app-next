@@ -381,13 +381,13 @@ export default function CampaignDetail() {
 
     // เงื่อนไขการประกอบรายละเอียด
     if (campaign.detailsname !== null && campaign.detailsbirthdate === null) {
-      detailsHtml += `<p class="text-xl font-bold mb-1">ข้อมูลผู้ร่วมบุญ</p><p class="break-words">${campaign.detailsname}</p>`;
+      detailsHtml += `<p class="text-xl font-bold mb-2">ข้อมูลผู้ร่วมบุญ</p><p class="break-words mb-4">${campaign.detailsname}</p>`;
     }
     if (campaign.detailsname !== null && campaign.detailswish !== null) {
-      detailsHtml += `<p class="text-xl font-bold mb-1">ข้อมูลผู้ร่วมบุญ</p><p class="break-words">${campaign.detailsname}</p>`;
+      detailsHtml += `<p class="text-xl font-bold mb-2">ข้อมูลผู้ร่วมบุญ</p><p class="break-words mb-4">${campaign.detailsname}</p>`;
     }
     if (campaign.detailsbirthdate !== null) {
-      detailsHtml += `<p class="text-xl font-bold mb-1">ข้อมูลผู้ร่วมบุญ</p><p class="break-words">
+      detailsHtml += `<p class="text-xl font-bold mb-2">ข้อมูลผู้ร่วมบุญ</p><p class="break-words mb-4">
           ${campaign.detailsname}<br/>
           ${campaign.detailsbirthdate} ${campaign.detailsbirthmonth} ${campaign.detailsbirthyear} เวลา 
           ${campaign.detailsbirthtime} ปี ${campaign.detailsbirthconstellation} อายุ 
@@ -395,14 +395,14 @@ export default function CampaignDetail() {
         </p>`;
     }
     if (campaign.detailstext !== null) {
-      detailsHtml += `<p class="text-xl font-bold mb-1">ข้อมูลผู้ร่วมบุญ</p><p class="break-words">${campaign.detailstext}</p>`;
+      detailsHtml += `<p class="text-xl font-bold mb-2">ข้อมูลผู้ร่วมบุญ</p><p class="break-words mb-4">${campaign.detailstext}</p>`;
     }
     if (campaign.details !== null) {
-      detailsHtml += `<p class="text-xl font-bold mb-1">ข้อมูลผู้ร่วมบุญ</p><p class="break-words">${campaign.details}</p>`;
+      detailsHtml += `<p class="text-xl font-bold mb-2">ข้อมูลผู้ร่วมบุญ</p><p class="break-words mb-4">${campaign.details}</p>`;
     }
 
     if (campaign.detailswish !== null) {
-      detailsHtml += `<br /><p class="text-xl font-bold mb-1">คำขอพร</p><p class="mb-4 break-words">${campaign.detailswish}</p>`;
+      detailsHtml += `<br /><p class="text-xl font-bold mb-2">คำขอพร</p><p class="mb-4 break-words">${campaign.detailswish}</p>`;
     }
 
     // เพิ่มปุ่ม "ส่งรูป" ลงไปใน HTML
