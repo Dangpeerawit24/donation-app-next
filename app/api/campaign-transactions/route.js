@@ -92,7 +92,7 @@ export async function POST(req) {
     const newTransaction = await prisma.campaign_transactions.create({
       data: {
         details: details,
-        detailswish: detailswish,
+        detailswish: detailswish && detailswish.trim() !== "" ? detailswish.trim() : null,
         lineId: lineLineIdinsert,
         lineName: lineNameinsert,
         transactionID: transactionID,
