@@ -86,6 +86,7 @@ export default function CampaignDetail() {
       textarea.value = updatedLines.join("\n");
 
       value.value = lines.length;
+      addCommasWish();
     };
   }
 
@@ -110,35 +111,29 @@ export default function CampaignDetail() {
   }
 
 
-  // ✅ เพิ่มสมาชิกใหม่
   const handleAddUser = async () => {
     const { value: formValues } = await Swal.fire({
       title: "เพิ่มรายการร่วมบุญ",
       html: `
         <div class="w-full max-w-lg mx-auto p-4">
-
           <div class="mb-4">
             <label class="block text-lg font-semibold mb-1">รายนาม:</label>
             <textarea id="swal-details" rows="5" class="w-full p-2 border border-gray-300 rounded-lg" required></textarea>
-          <button class="p-1 bg-blue-500 text-white rounded hover:bg-blue-600"
-                                onclick="addCommas()">แยกรายการ</button>
             </div>
-          
-  
+    
           <div class="mb-4">
             <label class="block text-lg font-semibold mb-1">คำขอพร:</label>
             <textarea id="swal-detailswish" rows="5" class="w-full p-2 border border-gray-300 rounded-lg"></textarea>
-            <button class="p-1 bg-blue-500 text-white rounded hover:bg-blue-600"
-                                onclick="addCommasWish()">แยกรายการ</button>
-          </div>
-
+            <button class="p-1 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="addCommas()">แยกรายการ</button>
+            </div>
+    
           <div class="grid grid-cols-1 gap-4 mb-4">
             <div>
               <label class="block text-lg font-semibold mb-1">จำนวน:</label>
               <input id="swal-value" type="number" min="1" class="w-full p-2 border border-gray-300 rounded-lg" value="1" required />
             </div>
           </div>
-
+    
           <div class="grid grid-cols-2 gap-4 mb-4">
             <div>
               <label class="block text-lg font-semibold mb-1">ชื่อไลน์:</label>
@@ -153,18 +148,14 @@ export default function CampaignDetail() {
               </select> 
             </div>
           </div>
-  
         </div>
       `,
       didOpen: () => {
         const topicContainer = document.getElementById("topic-container");
-
         if (topicContainer) {
           const root = ReactDOM.createRoot(topicContainer);
           root.render(
-            <TopicSelect
-              onChange={(e) => console.log("Selected Topic:", e.target.value)}
-            />
+            <TopicSelect onChange={(e) => console.log("Selected Topic:", e.target.value)} />
           );
         }
       },
@@ -178,53 +169,57 @@ export default function CampaignDetail() {
         const value = document.getElementById("swal-value").value;
         const lineName = document.getElementById("swal-lineName").value;
         const form = document.getElementById("swal-form").value;
-
-        if (
-          !details ||
-          !value ||
-          !lineName ||
-          !form
-        ) {
+    
+        if (!details || !value || !lineName || !form) {
           Swal.showValidationMessage("กรุณากรอกข้อมูลให้ครบทุกช่อง!");
           return false;
         }
-
-        return {
-          details,
-          detailswish,
-          value,
-          lineName,
-          form,
-        };
+    
+        return { details, detailswish, value, lineName, form };
       },
     });
-
+    
     if (!formValues) return;
-
+    
     try {
-      // ✅ ใช้ `FormData` แทน `JSON.stringify()` เพื่อรองรับการอัปโหลดไฟล์
-      const formData = new FormData();
-      formData.append("details", formValues.details);
-      formData.append("detailswish", formValues.detailswish);
-      formData.append("value", formValues.value);
-      formData.append("lineName", formValues.lineName);
-      formData.append("form", formValues.form);
-      formData.append("campaignsid", namecampaign.id);
-      formData.append("campaignsname", namecampaign.name);
-      formData.append("respond", namecampaign.respond);
-
-      const res = await fetch("/api/campaign-transactions", {
-        method: "POST",
-        body: formData, // ✅ ใช้ FormData เพื่อรองรับการอัปโหลดไฟล์
-      });
-
-      if (!res.ok) throw new Error("เพิ่มรายการร่วมบุญไม่สำเร็จ");
+      // แยกข้อมูลโดยใช้ delimiter "/n/"
+      const detailsArray = formValues.details.split("/n/").filter(item => item.trim() !== "");
+      // สำหรับ detailswish อาจจะไม่มีข้อมูลก็ได้ จึงตรวจสอบก่อน
+      const detailsWishArray = formValues.detailswish
+        ? formValues.detailswish.split("/n/").filter(item => item.trim() !== "")
+        : [];
+    
+      // วนลูปส่งข้อมูลแต่ละรายการ
+      for (let i = 0; i < detailsArray.length; i++) {
+        const formData = new FormData();
+    
+        // ส่งค่าที่เปลี่ยนไปในแต่ละรายการ
+        formData.append("details", detailsArray[i].trim());
+        formData.append("detailswish", detailsWishArray[i] ? detailsWishArray[i].trim() : "");
+    
+        // ส่งค่าที่เหมือนกันสำหรับทุกรายการ
+        formData.append("value", 1);
+        formData.append("lineName", formValues.lineName);
+        formData.append("form", formValues.form);
+        formData.append("campaignsid", namecampaign.id);
+        formData.append("campaignsname", namecampaign.name);
+        formData.append("respond", namecampaign.respond);
+    
+        const res = await fetch("/api/campaign-transactions", {
+          method: "POST",
+          body: formData,
+        });
+    
+        if (!res.ok) throw new Error("เพิ่มรายการร่วมบุญไม่สำเร็จ");
+      }
+    
       Swal.fire("สำเร็จ!", "เพิ่มรายการร่วมบุญใหม่แล้ว", "success");
       fetchdata();
     } catch (error) {
       Swal.fire("เกิดข้อผิดพลาด!", error.message, "error");
     }
   };
+  
 
   // ✅ ลบสมาชิก
   const handleDelete = async (id) => {
@@ -379,6 +374,55 @@ export default function CampaignDetail() {
     });
   };
 
+  const handleClick = (campaign) => {
+    let detailsHtml = "";
+
+    // เงื่อนไขการประกอบรายละเอียด
+    if (campaign.detailsname !== null && campaign.detailsbirthdate === null) {
+      detailsHtml += `<p class="break-words">${campaign.detailsname}</p>`;
+    }
+    if (campaign.detailsname !== null && campaign.detailswish !== null) {
+      detailsHtml += `<p class="break-words">${campaign.detailsname}</p>`;
+    }
+    if (campaign.detailsbirthdate !== null) {
+      detailsHtml += `<p class="break-words">
+        ${campaign.detailsname}<br/>
+        ${campaign.detailsbirthdate} ${campaign.detailsbirthmonth} ${campaign.detailsbirthyear} เวลา 
+        ${campaign.detailsbirthtime} ปี ${campaign.detailsbirthconstellation} อายุ 
+        ${campaign.detailsbirthage} ปี
+      </p>`;
+    }
+    if (campaign.detailstext !== null) {
+      detailsHtml += `<p class="break-words">${campaign.detailstext}</p>`;
+    }
+    if (campaign.details !== null) {
+      detailsHtml += `<p class="text-xl font-bold mb-1">ข้อมูลผู้ร่วมบุญ</p><p class="break-words">${campaign.details}</p>`;
+    }
+
+    if (campaign.detailswish !== null) {
+      detailsHtml += `<br /><p class="text-xl font-bold mb-1">คำขอพร</p><p class="mb-4 break-words">${campaign.detailswish}</p>`;
+    }
+
+    // เพิ่มปุ่ม "ส่งรูป" ลงไปใน HTML
+    detailsHtml += `<button id="push-image-button" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">ส่งรูป</button>`;
+
+    // แสดง SweetAlert2 popup พร้อมแนบ event ให้กับปุ่มที่เพิ่มเข้ามา
+    Swal.fire({
+      html: detailsHtml,
+      showConfirmButton: false,
+      confirmButtonText: "ปิด",
+      didOpen: () => {
+        const pushBtn = Swal.getPopup().querySelector("#push-image-button");
+        if (pushBtn) {
+          pushBtn.addEventListener("click", () => {
+            window.location.href = `/line/pushimages/${campaign.transactionID}`;
+          });
+        }
+      },
+    });
+  };
+
+
   return (
     <div className="min-h-screen pt-16 bg-gray-100">
       <Navbar />
@@ -452,7 +496,7 @@ export default function CampaignDetail() {
                         />
                       </a>
                     </td>
-                    <td className="p-4 text-nowrap truncate-text">
+                    <td className="p-4 text-nowrap truncate-text" onClick={() => handleClick(campaign)}>
                       {campaign.detailsname !== null && campaign.detailsbirthdate == null ? campaign.detailsname : ""}
                       {campaign.detailsname !== null && campaign.detailswish !== null ? campaign.detailsname : ""}
                       {campaign.detailsbirthdate !== null ? (

@@ -49,11 +49,11 @@ export default function AdminDashboard() {
   };
 
   useEffect(() => {
-      
+
     fetchdata();
-  
+
     const intervalId = setInterval(fetchdata, 5000);
-  
+
     return () => clearInterval(intervalId);
   }, []);
 
@@ -207,8 +207,8 @@ export default function AdminDashboard() {
           <h1 className="mt-10 text-xl">กองบุญที่ยังเปิดให้ร่วมบุญ</h1>
           <div className="overflow-x-auto mt-2">
             <div className="overflow-auto rounded-lg shadow-xl">
-              <table className="min-w-full border-collapse bg-white rounded-lg shadow-md">
-                <thead className="bg-white  text-gray-700 ">
+              <table className="w-full table-fixed border-collapse bg-white rounded-lg">
+                <thead className="bg-gray-200  text-gray-700 ">
                   <tr>
                     <th className="p-4 w-[5%] text-center">#</th>
                     <th className="p-4 w-[10%] text-center">รูป</th>
@@ -241,13 +241,13 @@ export default function AdminDashboard() {
                           />
                         </a>
                       </td>
-                      <td className="p-4">
-                      {campaign.price === 1 && (
-                        <a className="text-blue-600 text-lg" href={`/admin/manage-campaign/campaign-detail-all/${campaign.id}`}>{campaign.name}</a>
-                      )}
-                      {campaign.price > 1 && (
-                        <a className="text-blue-600 text-lg" href={`/admin/manage-campaign/campaign-detail/${campaign.id}`}>{campaign.name}</a>
-                      )}
+                      <td className="p-4 truncate-text">
+                        {campaign.price === 1 && (
+                          <a className="text-blue-600 text-lg" href={`/admin/manage-campaign/campaign-detail-all/${campaign.id}`}>{campaign.name}</a>
+                        )}
+                        {campaign.price > 1 && (
+                          <a className="text-blue-600 text-lg" href={`/admin/manage-campaign/campaign-detail/${campaign.id}`}>{campaign.name}</a>
+                        )}
                       </td>
                       <td className="p-4 text-center">
                         {campaign.price === 1 ? "ตามกำลังศรัทธา" : campaign.price}
