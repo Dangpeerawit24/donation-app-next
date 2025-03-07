@@ -379,13 +379,13 @@ export default function CampaignDetail() {
 
     // เงื่อนไขการประกอบรายละเอียด
     if (campaign.detailsname !== null && campaign.detailsbirthdate === null) {
-      detailsHtml += `<p class="break-words">${campaign.detailsname}</p>`;
+      detailsHtml += `<p class="text-xl font-bold mb-1">ข้อมูลผู้ร่วมบุญ</p><p class="break-words">${campaign.detailsname}</p>`;
     }
     if (campaign.detailsname !== null && campaign.detailswish !== null) {
-      detailsHtml += `<p class="break-words">${campaign.detailsname}</p>`;
+      detailsHtml += `<p class="text-xl font-bold mb-1">ข้อมูลผู้ร่วมบุญ</p><p class="break-words">${campaign.detailsname}</p>`;
     }
     if (campaign.detailsbirthdate !== null) {
-      detailsHtml += `<p class="break-words">
+      detailsHtml += `<p class="text-xl font-bold mb-1">ข้อมูลผู้ร่วมบุญ</p><p class="break-words">
         ${campaign.detailsname}<br/>
         ${campaign.detailsbirthdate} ${campaign.detailsbirthmonth} ${campaign.detailsbirthyear} เวลา 
         ${campaign.detailsbirthtime} ปี ${campaign.detailsbirthconstellation} อายุ 
@@ -393,7 +393,7 @@ export default function CampaignDetail() {
       </p>`;
     }
     if (campaign.detailstext !== null) {
-      detailsHtml += `<p class="break-words">${campaign.detailstext}</p>`;
+      detailsHtml += `<p class="text-xl font-bold mb-1">ข้อมูลผู้ร่วมบุญ</p><p class="break-words">${campaign.detailstext}</p>`;
     }
     if (campaign.details !== null) {
       detailsHtml += `<p class="text-xl font-bold mb-1">ข้อมูลผู้ร่วมบุญ</p><p class="break-words">${campaign.details}</p>`;
