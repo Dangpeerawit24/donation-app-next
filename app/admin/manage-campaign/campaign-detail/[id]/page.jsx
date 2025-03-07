@@ -105,8 +105,6 @@ export default function CampaignDetail() {
       });
 
       textarea.value = updatedLines.join("\n");
-
-      value.value = lines.length;
     };
   }
 

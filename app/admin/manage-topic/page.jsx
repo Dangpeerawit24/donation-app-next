@@ -254,11 +254,11 @@ export default function ManageTopic() {
                     <td className="p-4 text-center">{index + 1}</td>
                     <td className="p-4">{topic.name}</td>
                     <td className="p-4 text-center">{topic.total_campaigns}</td>
-                    <td className="p-4 text-center">{topic.total_value_price}</td>
+                    <td className="p-4 text-center">{Number(topic.total_value_price).toLocaleString("th-TH")}</td>
                     <td className="p-4 text-center">{topic.status}</td>
                     <td className="p-4 text-center">
                       <button
-                        onClick={() => (window.location.href = `/admin/topic-detail/${topic.id}`)}
+                        onClick={() => (window.location.href = `/admin/manage-topic/topic-detail/${topic.id}`)}
                         className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 mr-2"
                       >
                         รายการกองบุญ
