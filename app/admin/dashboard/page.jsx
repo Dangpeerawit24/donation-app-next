@@ -223,7 +223,7 @@ export default function AdminDashboard() {
                   {Campaigns.map((campaign, index) => (
                     <tr
                       key={campaign.id}
-                      className="hover:bg-gray-100 transition rounded-lg shadow-md"
+                      className="hover:bg-gray-100 transition rounded-lg"
                     >
                       <td className="p-4 text-center">{index + 1}</td>
                       <td className="p-4 text-center items-center">

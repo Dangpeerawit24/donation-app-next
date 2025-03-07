@@ -182,7 +182,7 @@ export async function POST(req) {
         if (Broadcast === "3months") {
           userIds = await prisma.line_users.findMany({
             where: {
-              createdAt: {
+              updatedAt: {
                 gte: new Date(new Date().setMonth(new Date().getMonth() - 3)),
               },
             },
@@ -191,7 +191,7 @@ export async function POST(req) {
         } else if (Broadcast === "year") {
           userIds = await prisma.line_users.findMany({
             where: {
-              createdAt: {
+              updatedAt: {
                 gte: new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
               },
             },

@@ -255,6 +255,34 @@ export default function CampaignDetail() {
     }
   };
 
+  const handlesucceed = async (id) => {
+    const result = await Swal.fire({
+      title: "คุณแน่ใจหรือไม่?",
+      text: "เคลีย์ข้อมูลที่สำเร็จแล้ว?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#EF4444",
+      confirmButtonText: "ยืนยัน",
+      cancelButtonText: "ยกเลิก",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const res = await fetch(`/api/campaign-transactions/succeed?id=${id}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id }),
+        });
+
+        if (!res.ok) throw new Error("อัเเดตข้อมูลไม่สำเร็จ");
+        Swal.fire("สำเร็จ!", "ข้อมูลถูกอัพเดตแล้ว", "success");
+        fetchdata();
+      } catch (error) {
+        Swal.fire("เกิดข้อผิดพลาด!", error.message, "error");
+      }
+    }
+  };
+
   const copyTable = () => {
     const table = document.getElementById("myTable");
     if (!table) return;
@@ -370,7 +398,13 @@ export default function CampaignDetail() {
               }
               className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">รายการที่ดำเนินการแล้ว</button>
           </div>
-          <div>
+          <div className="flex gap-2">
+            <button
+              onClick={() => handlesucceed(namecampaign.id)}
+              className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+            >
+              เคลีย์ข้อมูลที่สำเร็จแล้ว
+            </button>
             <button
               onClick={handleAddUser}
               className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
