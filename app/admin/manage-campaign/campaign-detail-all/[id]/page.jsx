@@ -197,8 +197,11 @@ export default function CampaignDetail() {
         formData.append("details", detailsArray[i].trim());
         formData.append("detailswish", detailsWishArray[i] ? detailsWishArray[i].trim() : "");
 
+        // เช็คว่ามีหลายรายการหรือไม่ ถ้ามีให้ใช้ value เป็น 1 ถ้าไม่ให้ใช้ formValues.value
+        const valueToSend = detailsArray.length > 1 ? 1 : formValues.value;
+        formData.append("value", valueToSend);
+
         // ส่งค่าที่เหมือนกันสำหรับทุกรายการ
-        formData.append("value", 1);
         formData.append("lineName", formValues.lineName);
         formData.append("form", formValues.form);
         formData.append("campaignsid", namecampaign.id);

@@ -110,7 +110,6 @@ export default function CampaignDetail() {
     };
   }
 
-
   const handleAddUser = async () => {
     const { value: formValues } = await Swal.fire({
       title: "เพิ่มรายการร่วมบุญ",
@@ -169,18 +168,18 @@ export default function CampaignDetail() {
         const value = document.getElementById("swal-value").value;
         const lineName = document.getElementById("swal-lineName").value;
         const form = document.getElementById("swal-form").value;
-    
+
         if (!details || !value || !lineName || !form) {
           Swal.showValidationMessage("กรุณากรอกข้อมูลให้ครบทุกช่อง!");
           return false;
         }
-    
+
         return { details, detailswish, value, lineName, form };
       },
     });
-    
+
     if (!formValues) return;
-    
+
     try {
       // แยกข้อมูลโดยใช้ delimiter "/n/"
       const detailsArray = formValues.details.split("/n/").filter(item => item.trim() !== "");
@@ -188,38 +187,41 @@ export default function CampaignDetail() {
       const detailsWishArray = formValues.detailswish
         ? formValues.detailswish.split("/n/").filter(item => item.trim() !== "")
         : [];
-    
+
       // วนลูปส่งข้อมูลแต่ละรายการ
       for (let i = 0; i < detailsArray.length; i++) {
         const formData = new FormData();
-    
+
         // ส่งค่าที่เปลี่ยนไปในแต่ละรายการ
         formData.append("details", detailsArray[i].trim());
         formData.append("detailswish", detailsWishArray[i] ? detailsWishArray[i].trim() : "");
-    
+
+        // เช็คว่ามีหลายรายการหรือไม่ ถ้ามีให้ใช้ value เป็น 1 ถ้าไม่ให้ใช้ formValues.value
+        const valueToSend = detailsArray.length > 1 ? 1 : formValues.value;
+        formData.append("value", valueToSend);
+
         // ส่งค่าที่เหมือนกันสำหรับทุกรายการ
-        formData.append("value", 1);
         formData.append("lineName", formValues.lineName);
         formData.append("form", formValues.form);
         formData.append("campaignsid", namecampaign.id);
         formData.append("campaignsname", namecampaign.name);
         formData.append("respond", namecampaign.respond);
-    
+
         const res = await fetch("/api/campaign-transactions", {
           method: "POST",
           body: formData,
         });
-    
+
         if (!res.ok) throw new Error("เพิ่มรายการร่วมบุญไม่สำเร็จ");
       }
-    
+
       Swal.fire("สำเร็จ!", "เพิ่มรายการร่วมบุญใหม่แล้ว", "success");
       fetchdata();
     } catch (error) {
       Swal.fire("เกิดข้อผิดพลาด!", error.message, "error");
     }
   };
-  
+
 
   // ✅ ลบสมาชิก
   const handleDelete = async (id) => {
