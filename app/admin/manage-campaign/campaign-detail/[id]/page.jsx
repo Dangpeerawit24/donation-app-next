@@ -512,7 +512,7 @@ export default function CampaignDetail() {
                       {campaign.detailstext !== null ? campaign.detailstext : ""}
                       {campaign.details !== null ? campaign.details : ""}
                     </td>
-                    <td className="p-4 text-nowrap tuncate-text">
+                    <td className="p-4 break-words tuncate-text">
                       {campaign.detailswish !== null ? campaign.detailswish : ""}
                     </td>
                     <td className="p-4 text-center text-nowrap truncate-text">{campaign.value}</td>
