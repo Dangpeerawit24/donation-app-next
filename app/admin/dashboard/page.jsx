@@ -188,14 +188,14 @@ export default function AdminDashboard() {
             <p className="mt-2 text-4xl font-bold text-green-600 ">{Number(total_value_year).toLocaleString("th-TH")}</p>
           </div>
 
-          <div className="bg-white  p-6 rounded-lg shadow-md text-center">
+          <div className="bg-white hidden sm:block  p-6 rounded-lg shadow-md text-center">
             <h3 className="text-lg text-start font-semibold text-gray-800 ">
               จำนวนกองบุญ (เดือนนี้)
             </h3>
             <p className="mt-2 text-4xl font-bold text-red-600 ">{campaignCountMonth}</p>
           </div>
 
-          <div className="bg-white  p-6 rounded-lg shadow-md text-center">
+          <div className="bg-white hidden sm:block  p-6 rounded-lg shadow-md text-center">
             <h3 className="text-lg text-start font-semibold text-gray-800 ">
               จำนวนกองบุญ (ปีนี้)
             </h3>
@@ -204,8 +204,8 @@ export default function AdminDashboard() {
         </div>
 
         <div>
-          <h1 className="mt-10 text-xl">กองบุญที่ยังเปิดให้ร่วมบุญ</h1>
-          <div className="overflow-x-auto mt-2">
+          <h1 className="mt-10 mb-5 text-xl">กองบุญที่ยังเปิดให้ร่วมบุญ</h1>
+          <div className="hidden md:flex overflow-x-auto mt-2">
             <div className="overflow-auto rounded-lg shadow-xl">
               <table className="w-full table-fixed border-collapse bg-white rounded-lg">
                 <thead className="bg-gray-200  text-gray-700 ">
@@ -267,6 +267,31 @@ export default function AdminDashboard() {
               </table>
             </div>
           </div>
+          {Campaigns.map((campaign, index) => (
+            <div key={campaign.id} className="flex md:hidden px-2 py-4 bg-sky-200 shadow-md rounded-lg mb-2">
+              <div className="grid grid-cols-1 w-full">
+                <div className="w-full">
+                  <p className="truncate-text text-nowrap">กองบุญ {campaign.name}</p>
+                </div>
+                <div className="mt-4 grid grid-cols-2 gap-2 h-24 bg-white rounded-lg p-4 w-full items-center">
+                  {/* <p className="text-center">ราคา</p> */}
+                  <p className="text-center">ร่วมบุญแล้ว</p>
+                  <p className="text-center">คงเหลือ</p>
+                  {/* <p className="text-center">{campaign.price === 1 ? "ตามกำลังศรัทธา" : campaign.price}</p> */}
+                  <p className="text-center">{campaign.price === 1 ? campaign.total_donated + " (บาท)" : campaign.total_donated}</p>
+                  <p className="text-center">{campaign.remaining_stock === 999999 ? "ตามกำลังศรัทธา" : campaign.remaining_stock}</p>
+                </div>
+                <div className="text-center mt-4">
+                  {campaign.price === 1 && (
+                    <a className="bg-blue-500 text-white py-2 px-4 rounded-lg" href={`/admin/manage-campaign/campaign-detail-all/${campaign.id}`}>รายการร่วมบุญ</a>
+                  )}
+                  {campaign.price > 1 && (
+                    <a className="bg-blue-500 text-white py-2 px-4 rounded-lg" href={`/admin/manage-campaign/campaign-detail/${campaign.id}`}>รายการร่วมบุญ</a>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </main>
       <ScrollToTop />
