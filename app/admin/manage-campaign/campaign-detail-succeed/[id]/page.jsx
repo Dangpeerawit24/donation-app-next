@@ -50,11 +50,11 @@ export default function CampaignDetail() {
   };
 
   useEffect(() => {
-      
+
     fetchdata();
-  
+
     const intervalId = setInterval(fetchdata, 5000);
-  
+
     return () => clearInterval(intervalId);
   }, []);
 
@@ -379,8 +379,8 @@ export default function CampaignDetail() {
                 <tr>
                   <th className="p-4 w-[2%] text-center">#</th>
                   <th className="p-4 w-[5%] text-center">สลิป</th>
-                  <th className="p-4 text-start">ข้อมูลผู้ร่วมบุญ</th>
-                  <th className="p-4 text-start">คำขอพร</th>
+                  <th className="p-4 w-[43%] text-start">ข้อมูลผู้ร่วมบุญ</th>
+                  <th className="p-4 w-[30%] text-start">คำขอพร</th>
                   <th className="p-4 w-[5%] text-center">จำนวน</th>
                   <th className="p-4 w-[10%] text-center">ชื่อไลน์</th>
                   <th className="p-4 w-[5%] text-center">ที่มา</th>
@@ -410,11 +410,9 @@ export default function CampaignDetail() {
                       </a>
                     </td>
                     <td className="p-4 text-nowrap truncate-text">
-                      {campaign.detailsname !== null && campaign.detailsbirthdate == null ? campaign.detailsname : ""}
-                      {campaign.detailsname !== null && campaign.detailswish !== null ? campaign.detailsname : ""}
+                      {campaign.detailsname !== null ? campaign.detailsname : ""}
                       {campaign.detailsbirthdate !== null ? (
                         <>
-                          {campaign.detailsname}
                           <br />
                           {campaign.detailsbirthdate}{" "}
                           {campaign.detailsbirthmonth}{" "}

@@ -317,8 +317,10 @@ export default function ManageCampaign() {
               <option value="ชื่อสกุล" ${campaign.details === "ชื่อสกุล" ? "selected" : ""}>ชื่อสกุล</option>
               <option value="กล่องข้อความใหญ่" ${campaign.details === "กล่องข้อความใหญ่" ? "selected" : ""}>กล่องข้อความใหญ่</option>
               <option value="ชื่อวันเดือนปีเกิด" ${campaign.details === "ชื่อวันเดือนปีเกิด" ? "selected" : ""}>ชื่อวันเดือนปีเกิด</option>
+              <option value="ชื่อวันเดือนปีเกิดคำอธิษฐาน" ${campaign.details === "ชื่อวันเดือนปีเกิดคำอธิษฐาน" ? "selected" : ""}>ชื่อวันเดือนปีเกิดคำอธิษฐาน</option>
+              <option value="คำอธิษฐาน" ${campaign.details === "คำอธิษฐาน" ? "selected" : ""}>คำอธิษฐาน</option>
               <option value="ตามศรัทธา" ${campaign.details === "ตามศรัทธา" ? "selected" : ""}>ตามศรัทธา</option>
-              <option value="คำขอพร" ${campaign.details === "คำขอพร" ? "selected" : ""}>คำขอพร</option>
+              <option value="ตามศรัทธาคำอธิษฐาน" ${campaign.details === "ตามศรัทธาคำอธิษฐาน" ? "selected" : ""}>ตามศรัทธาคำอธิษฐาน</option>
             </select>
           </div>
   

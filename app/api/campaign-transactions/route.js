@@ -47,7 +47,7 @@ export async function POST(req) {
     if (respond === "แอดมินจะส่งภาพกองบุญให้ท่านได้อนุโมทนาอีกครั้ง") {
       status = "รอดำเนินการ";
     } else {
-      status = "ส่งภาพกองบุญแล้ว";
+      status = "ข้อมูลของท่านเข้าระบบแล้ว";
     }
 
     // ค้นหาข้อมูล lineUser จากฐานข้อมูล โดยใช้ display_name เท่ากับ lineName
