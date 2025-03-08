@@ -62,11 +62,11 @@ export default function ManageCampaign() {
   };
 
   useEffect(() => {
-      
+
     fetchdata();
-  
+
     const intervalId = setInterval(fetchdata, 5000);
-  
+
     return () => clearInterval(intervalId);
   }, []);
 
@@ -104,12 +104,13 @@ export default function ManageCampaign() {
     <div className="min-h-screen pt-16 bg-gray-100 ">
       <Navbar />
       <main className="p-6">
-        <h1 className="text-2xl font-bold text-gray-900  text-center mb-6">
-          สรุปรายรับกองบุญ #{ nametopic[0]?.name }
+        <h1 className="text-2xl font-bold text-gray-900  text-center mb-2">
+          สรุปรายรับกองบุญ
         </h1>
+        <h1 className="text-2xl font-bold text-gray-900  text-center mb-6 text-nowrap truncate-text">{nametopic[0]?.name}</h1>
 
         <div className="overflow-x-auto">
-          <div className="overflow-auto rounded-lg shadow-lg">
+          <div className="hidden md:block overflow-auto rounded-lg shadow-lg">
             <table className="min-w-full border-collapse bg-white  rounded-lg">
               <thead className="bg-gray-200  text-gray-700 ">
                 <tr>
@@ -195,6 +196,63 @@ export default function ManageCampaign() {
                 )}
               </tbody>
             </table>
+          </div>
+          <div className="md:hidden">
+            {campaigns.length > 0 && (
+              <div className="mb-4 rounded-lg shadow-lg py-6 px-2 bg-sky-200 ">
+                <div className=" flex flex-col ">
+                  <div className="px-2 text-lg break-words">
+                    ยอดรวมรายได้ทั้งหมด
+                  </div>
+                  <div className="mt-4 grid grid-cols-2 gap-2 h-auto bg-white rounded-lg p-4 w-full items-center">
+                    <p className="text-start">{Number(totalAllRevenue).toLocaleString("th-TH")}</p>
+                    <p className="text-end">บาท</p>
+                  </div>
+                </div>
+              </div>
+            )}
+            {campaigns.map((campaign, index) => (
+              <div key={campaign.id} className="mb-4 rounded-lg shadow-lg py-6 px-2 bg-sky-200 ">
+                <div className=" flex flex-col ">
+                  <div className="px-2 text-lg">
+                    กองบุญ
+                    <p className=" text-lg text-nowrap truncate-text">
+                      {campaign.name}
+                    </p>
+                  </div>
+                  <div className="mt-4 grid grid-cols-2 gap-2 h-auto bg-white rounded-lg p-4 w-full items-center">
+                    <p className="text-start">ราคา</p>
+                    <p className="text-end">{campaign.price === 1 ? "ตามกำลังศรัทธา" : campaign.price}</p>
+                    <p className="text-start">ยอดร่วมบุญ</p>
+                    <p className="text-end">{campaign.price === 1 ? campaign.total_value + " (บาท)" : campaign.total_value}</p>
+                    <p className="text-start">ยอดรวมรายได้</p>
+                    <p className="text-end">{campaign.total_value * campaign.price}</p>
+                  </div>
+                </div>
+                <div className="flex justify-center itm=em-center gap-2 mt-4">
+                  {campaign.price === 1 && (
+                    <button
+                      onClick={() =>
+                        (window.location.href = `/admin/manage-campaign/campaign-detail-all/${campaign.id}`)
+                      }
+                      className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                    >
+                      รายการร่วมบุญ
+                    </button>
+                  )}
+                  {campaign.price > 1 && (
+                    <button
+                      onClick={() =>
+                        (window.location.href = `/admin/manage-campaign/campaign-detail/${campaign.id}`)
+                      }
+                      className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                    >
+                      รายการร่วมบุญ
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </main>

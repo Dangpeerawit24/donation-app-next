@@ -46,11 +46,11 @@ export default function CampaignClosed() {
   };
 
   useEffect(() => {
-      
+
     fetchdata();
-  
+
     const intervalId = setInterval(fetchdata, 5000);
-  
+
     return () => clearInterval(intervalId);
   }, []);
 
@@ -73,15 +73,15 @@ export default function CampaignClosed() {
       cancelButtonText: "ยกเลิก",
       focusConfirm: false,
       preConfirm: () => {
-        return {  
+        return {
           id: campaign.id,
-          status: document.getElementById("swal-status").value.trim(), 
+          status: document.getElementById("swal-status").value.trim(),
         };
       },
     });
-  
+
     if (!formValues) return;
-  
+
     try {
       const res = await fetch("/api/campaigns/closed", {
         method: "PUT",
@@ -90,7 +90,7 @@ export default function CampaignClosed() {
         },
         body: JSON.stringify(formValues),
       });
-  
+
       if (!res.ok) throw new Error("แก้ไขกองบุญไม่สำเร็จ");
       Swal.fire("สำเร็จ!", "แก้ไขข้อมูลกองบุญแล้ว", "success")
     } catch (error) {
@@ -161,7 +161,7 @@ export default function CampaignClosed() {
         </div>
 
         <div className="overflow-x-auto">
-          <div className="overflow-auto rounded-lg shadow-lg">
+          <div className="hidden md:flex overflow-auto rounded-lg shadow-lg">
             <table className="min-w-full border-collapse bg-white  rounded-lg">
               <thead className="bg-gray-200  text-gray-700 ">
                 <tr>
@@ -228,13 +228,56 @@ export default function CampaignClosed() {
                             รายการร่วมบุญ
                           </button>
                         )}
-                        
+
                       </div>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
+          </div>
+          <div className="md:hidden">
+            {campaigns.map((campaign, index) => (
+              <div key={campaign.id} className="mb-4 rounded-lg shadow-lg py-6 px-2 bg-sky-200 ">
+                <div className=" flex flex-col ">
+                  <div className="truncate-text text-nowrap">
+                    <p>
+                      กองบุญ{campaign.name}
+                    </p>
+                  </div>
+                  <div className="mt-4 grid grid-cols-3 gap-2 h-24 bg-white rounded-lg p-4 w-full items-center">
+                    <p className="text-center">ราคา</p>
+                    <p className="text-center">จำนวน</p>
+                    <p className="text-center">ยอดร่วมบุญ</p>
+                    <p className="text-center">{campaign.price === 1 ? "ตามกำลังศรัทธา" : campaign.price}</p>
+                    <p className="text-center">{campaign.price === 1 ? "ตามกำลังศรัทธา" : campaign.stock}</p>
+                    <p className="text-center">{campaign.price === 1 ? campaign.total_value + " (บาท)" : campaign.total_value}</p>
+                  </div>
+                </div>
+                <div className="flex justify-center itm=em-center gap-2 mt-4">
+                  {campaign.price === 1 && (
+                    <button
+                      onClick={() =>
+                        (window.location.href = `/admin/manage-campaign/campaign-detail-all/${campaign.id}`)
+                      }
+                      className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                    >
+                      รายการร่วมบุญ
+                    </button>
+                  )}
+                  {campaign.price > 1 && (
+                    <button
+                      onClick={() =>
+                        (window.location.href = `/admin/manage-campaign/campaign-detail/${campaign.id}`)
+                      }
+                      className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                    >
+                      รายการร่วมบุญ
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </main>

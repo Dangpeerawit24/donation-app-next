@@ -26,7 +26,7 @@ export default function LoginPage() {
       });
     }
   }, []);
-  
+
   useEffect(() => {
     if (status === "authenticated") {
       const role = session?.user?.role;
@@ -67,11 +67,16 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen p-4 items-center justify-center bg-gray-100 ">
+    <div className="flex min-h-screen p-4 items-center justify-center bg-gradient-to-br from-sky-400 to-blue-600">
       <div className="w-full max-w-md p-8 space-y-6 bg-white  shadow-md rounded-lg">
-        <h1 className="text-2xl font-bold text-center text-gray-900 ">
-          เข้าสู่ระบบกองบุญออนไลน์
-        </h1>
+        <div>
+          <h1 className="text-2xl font-bold text-center text-gray-900 ">
+            เข้าสู่ระบบ
+          </h1>
+          <h1 className="text-xl font-bold text-center text-gray-900 ">
+            จัดการกองบุญออนไลน์
+          </h1>
+        </div>
 
         {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 

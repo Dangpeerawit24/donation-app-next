@@ -39,11 +39,11 @@ export default function UserManagement() {
   };
 
   useEffect(() => {
-      
+
     fetchUsers();
-  
+
     const intervalId = setInterval(fetchUsers, 5000);
-  
+
     return () => clearInterval(intervalId);
   }, []);
 
@@ -233,7 +233,7 @@ export default function UserManagement() {
         </div>
 
         <div className="overflow-x-auto table-container table-fixed">
-          <div className="overflow-auto rounded-lg shadow-lg">
+          <div className="hidden md:block overflow-auto rounded-lg shadow-lg">
             <table id="myTable" className="w-full table-fixed border-collapse bg-white rounded-lg">
               <thead className="bg-gray-200 text-gray-700">
                 <tr>
@@ -269,6 +269,41 @@ export default function UserManagement() {
                 ))}
               </tbody>
             </table>
+          </div>
+          <div className="md:hidden">
+            {users.map((user, index) => (
+              <div key={user.id} className="mb-4 rounded-lg shadow-lg py-6 px-2 bg-sky-200 ">
+                <div className="mt-4 grid grid-cols-1 gap-2 h-auto bg-white rounded-lg p-4 w-full items-center">
+                  <div className="flex flex-row justify-center ">
+                    {user.name}
+                  </div>
+                  <div className="flex flex-row justify-center">
+                    <p>
+                      {user.email}
+                    </p>
+                  </div>
+                  <div className="flex flex-row justify-center">
+                    <p>
+                      สิทธิ์การใช้งาน : {user.role}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex justify-center itm=em-center gap-2 mt-4">
+                  <button
+                    onClick={() => handleEditUser(user)}
+                    className="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 mr-2"
+                  >
+                    แก้ไข
+                  </button>
+                  <button
+                    onClick={() => handleDeleteUser(user.id)}
+                    className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                  >
+                    ลบ
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </main>

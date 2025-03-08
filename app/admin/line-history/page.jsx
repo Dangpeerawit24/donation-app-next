@@ -18,57 +18,57 @@ export default function LineHistory() {
   const router = useRouter();
 
   useEffect(() => {
-      if (status === "loading") return;
-  
-      if (!session || session.user.role !== "admin") {
-        Swal.fire({
-          title: "ปฏิเสธการเข้าถึง",
-          text: "คุณไม่มีสิทธิ์เข้าถึงหน้านี้",
-          icon: "error",
-        }).then(() => router.push("/login"));
-      } else {
-        setLoading(false);
-      }
-    }, [session, status, router]);
+    if (status === "loading") return;
 
-    const fetchdata = async () => {
-      try {
-        const res = await fetch("/api/line-history");
-        const data = await res.json();
-        setLineusers(data);
-        setLoading(false);
-      } catch (error) {
-        console.error("เกิดข้อผิดพลาดในการดึงข้อมูลสมาชิก:", error);
-      }
+    if (!session || session.user.role !== "admin") {
+      Swal.fire({
+        title: "ปฏิเสธการเข้าถึง",
+        text: "คุณไม่มีสิทธิ์เข้าถึงหน้านี้",
+        icon: "error",
+      }).then(() => router.push("/login"));
+    } else {
       setLoading(false);
-    };
-  
-    useEffect(() => {
-      
-      fetchdata();
-    
-      const intervalId = setInterval(fetchdata, 5000);
-    
-      return () => clearInterval(intervalId);
-    }, []);
-
-    if (loading) {
-      return (
-        <div
-          id="loader"
-          className="fixed inset-0 bg-gray-200 bg-opacity-50 flex items-center justify-center z-50"
-        >
-          <div className="flex flex-col items-center">
-            <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent border-dashed rounded-full animate-spin"></div>
-            <p className="mt-4 text-blue-400 text-lg font-semibold">Loading...</p>
-          </div>
-        </div>
-      );
     }
+  }, [session, status, router]);
 
-    const imgswl = async (img) => {
-      await Swal.fire({
-        html: `
+  const fetchdata = async () => {
+    try {
+      const res = await fetch("/api/line-history");
+      const data = await res.json();
+      setLineusers(data);
+      setLoading(false);
+    } catch (error) {
+      console.error("เกิดข้อผิดพลาดในการดึงข้อมูลสมาชิก:", error);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+
+    fetchdata();
+
+    const intervalId = setInterval(fetchdata, 5000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  if (loading) {
+    return (
+      <div
+        id="loader"
+        className="fixed inset-0 bg-gray-200 bg-opacity-50 flex items-center justify-center z-50"
+      >
+        <div className="flex flex-col items-center">
+          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent border-dashed rounded-full animate-spin"></div>
+          <p className="mt-4 text-blue-400 text-lg font-semibold">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const imgswl = async (img) => {
+    await Swal.fire({
+      html: `
           <div class="flex flex-col items-end">
             <div id="close-btn-container"></div>
             <div class="flex flex-col items-center">
@@ -76,25 +76,25 @@ export default function LineHistory() {
             </div>
           </div>
         `,
-        showConfirmButton: false, // 🔹 ซ่อนปุ่ม OK
-        didOpen: () => {
-          const closeBtnContainer = document.getElementById(
-            "close-btn-container"
+      showConfirmButton: false, // 🔹 ซ่อนปุ่ม OK
+      didOpen: () => {
+        const closeBtnContainer = document.getElementById(
+          "close-btn-container"
+        );
+        if (closeBtnContainer) {
+          const root = ReactDOM.createRoot(closeBtnContainer);
+          root.render(
+            <X
+              size={28}
+              id="close-btn"
+              className="cursor-pointer text-gray-500 hover:text-gray-700"
+              onClick={() => Swal.close()}
+            />
           );
-          if (closeBtnContainer) {
-            const root = ReactDOM.createRoot(closeBtnContainer);
-            root.render(
-              <X
-                size={28}
-                id="close-btn"
-                className="cursor-pointer text-gray-500 hover:text-gray-700"
-                onClick={() => Swal.close()}
-              />
-            );
-          }
-        },
-      });
-    };
+        }
+      },
+    });
+  };
 
   return (
     <div className="min-h-screen pt-16 bg-gray-100 ">
@@ -102,13 +102,13 @@ export default function LineHistory() {
       {/* Content */}
       <main className="p-6">
         <h1 className="text-2xl font-bold text-gray-900  text-center mb-6">
-        รายการลูกบุญย้อนหลัง
+          รายการลูกบุญย้อนหลัง
         </h1>
 
-        
+
 
         <div className="overflow-x-auto table-container table-fixed">
-          <div className="overflow-auto rounded-lg shadow-lg">
+          <div className="hidden md:block overflow-auto rounded-lg shadow-lg">
             <table id="myTable" className="w-full table-fixed border-collapse bg-white rounded-lg">
               <thead className="bg-gray-200 text-gray-700">
                 <tr>
@@ -144,6 +144,29 @@ export default function LineHistory() {
               </tbody>
             </table>
           </div>
+          {Lineusers.map((Lineuser, index) => (
+            <div key={Lineuser.id} className="mb-4 rounded-lg shadow-lg py-6 px-2 bg-sky-200 ">
+              <div className=" flex flex-col ">
+                <div className="px-2 text-lg flex justify-between items-center">
+                  <a
+                    className="flex justify-center"
+                    href="#"
+                    onClick={() =>
+                      imgswl(`${Lineuser.picture_url}`)
+                    }
+                  >
+                    {Lineuser.display_name}
+                  </a>
+                </div>
+                <div className="px-2 text-lg">
+
+                </div>
+                <div className="mt-4 grid grid-cols-1 gap-2 h-auto bg-white rounded-lg p-4 w-full items-center">
+                  <p className="text-center">{Lineuser.user_id}</p>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </main>
       <ScrollToTop />

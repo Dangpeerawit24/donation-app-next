@@ -39,11 +39,11 @@ export default function ManageTopic() {
   };
 
   useEffect(() => {
-      
+
     fetchdata();
-  
+
     const intervalId = setInterval(fetchdata, 5000);
-  
+
     return () => clearInterval(intervalId);
   }, []);
 
@@ -233,7 +233,7 @@ export default function ManageTopic() {
         </div>
 
         <div className="overflow-x-auto table-container table-fixed">
-          <div className="overflow-auto rounded-lg shadow-lg">
+          <div className="hidden md:flex overflow-auto rounded-lg shadow-lg">
             <table
               id="myTable"
               className="w-full table-fixed border-collapse bg-white rounded-lg"
@@ -280,6 +280,45 @@ export default function ManageTopic() {
                 ))}
               </tbody>
             </table>
+          </div>
+          <div className="md:hidden">
+            {Topics.map((topic, index) => (
+              <div key={topic.id} className="mb-4 rounded-lg shadow-lg py-6 px-2 bg-sky-200 ">
+                <div className=" flex flex-col ">
+                  <div className="px-2 text-lg break-words">
+                      กองบุญ{topic.name}
+                  </div>
+                  <div className="mt-4 grid grid-cols-2 gap-2 h-auto bg-white rounded-lg p-4 w-full items-center">
+                    <p className="text-start">จำนวนกองบุญที่เปิด</p>
+                    <p className="text-end">{topic.total_campaigns}</p>
+                    <p className="text-start">ยอดรวมรายได้</p>
+                    <p className="text-end">{Number(topic.total_value_price).toLocaleString("th-TH")}</p>
+                    <p className="text-start">สถานะ</p>
+                    <p className="text-end">{topic.status}</p>
+                  </div>
+                </div>
+                <div className="flex justify-center itm=em-center gap-2 mt-4">
+                  <button
+                    onClick={() => (window.location.href = `/admin/manage-topic/topic-detail/${topic.id}`)}
+                    className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 mr-2"
+                  >
+                    รายการกองบุญ
+                  </button>
+                  <button
+                    onClick={() => handleEditUser(topic)}
+                    className="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 mr-2"
+                  >
+                    แก้ไข
+                  </button>
+                  <button
+                    onClick={() => handleDeleteUser(topic.id)}
+                    className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                  >
+                    ลบ
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </main>

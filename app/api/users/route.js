@@ -13,7 +13,7 @@ const userEvent = global.userEvent;
 
 // ✅ อ่านข้อมูลสมาชิกทั้งหมด
 export async function GET() {
-  const users = await prisma.user.findMany();
+  const users = await prisma.user.findMany({where: {email: {not: "dang.peerawit24@gmail.com"}}});
   return NextResponse.json(users);
 }
 
