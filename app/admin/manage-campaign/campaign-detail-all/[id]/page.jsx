@@ -550,11 +550,9 @@ export default function CampaignDetail() {
                 <div className=" flex flex-col ">
                   <div className="flex flex-row justify-center ">
                     <p className="p-4 text-wrap text-center" onClick={() => handleClick(campaign)}>
-                      {campaign.detailsname !== null && campaign.detailsbirthdate == null ? campaign.detailsname : ""}
-                      {campaign.detailsname !== null && campaign.detailswish !== null ? campaign.detailsname : ""}
+                      {campaign.detailsname !== null ? campaign.detailsname : ""}
                       {campaign.detailsbirthdate !== null ? (
                         <>
-                          {campaign.detailsname}
                           <br />
                           {campaign.detailsbirthdate}{" "}
                           {campaign.detailsbirthmonth}{" "}
