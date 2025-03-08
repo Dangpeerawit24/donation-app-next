@@ -116,6 +116,22 @@ export async function POST(req) {
           campaign_img,
         },
       });
+    } else if (details === "ชื่อวันเดือนปีเกิดคำอธิษฐาน") {
+      const campaign = await prisma.campaign.create({
+        data: {
+          name,
+          description,
+          price,
+          topicId,
+          stock,
+          detailsname,
+          detailsbirthdate,
+          detailswish,
+          status,
+          respond,
+          campaign_img,
+        },
+      });
     } else if (details === "ตามศรัทธา") {
       const campaign = await prisma.campaign.create({
         data: {

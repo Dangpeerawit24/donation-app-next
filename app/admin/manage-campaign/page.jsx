@@ -118,6 +118,7 @@ export default function ManageCampaign() {
               <option value="ชื่อสกุล">ชื่อสกุล</option>
               <option value="ชื่อวันเดือนปีเกิด">ชื่อวันเดือนปีเกิด</option>
               <option value="กล่องข้อความใหญ่">กล่องข้อความใหญ่</option>
+              <option value="ชื่อวันเดือนปีเกิดคำอธิษฐาน">ชื่อวันเดือนปีเกิดคำอธิษฐาน</option>
               <option value="คำอธิษฐาน">คำอธิษฐาน</option>
               <option value="ตามศรัทธา">ตามศรัทธา</option>
               <option value="ตามศรัทธาคำอธิษฐาน">ตามศรัทธาคำอธิษฐาน</option>
