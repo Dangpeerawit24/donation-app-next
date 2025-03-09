@@ -379,15 +379,15 @@ export default function CampaignDetail() {
 
     // เงื่อนไขการประกอบรายละเอียด
     if (campaign.detailsname !== null) {
-      detailsHtml += `<p class="text-xl font-bold mb-2">ข้อมูลผู้ร่วมบุญ</p><p class="break-words mb-4">${campaign.detailsname}</p>`;
+      detailsHtml += `<p class="text-xl font-bold mb-2">ข้อมูลผู้ร่วมบุญ</p><p class="break-words mb-2">${campaign.detailsname}</p>`;
     }
     if (campaign.detailsbirthdate !== null) {
-      detailsHtml += `<p class="text-xl font-bold mb-2">ข้อมูลผู้ร่วมบุญ</p><p class="break-words mb-4">
-          <br/>
-          ${campaign.detailsbirthdate} ${campaign.detailsbirthmonth} ${campaign.detailsbirthyear} เวลา 
-          ${campaign.detailsbirthtime} ปี ${campaign.detailsbirthconstellation} อายุ 
-          ${campaign.detailsbirthage} ปี
-        </p>`;
+      detailsHtml += `
+              <br/>
+              ${campaign.detailsbirthdate} ${campaign.detailsbirthmonth} ${campaign.detailsbirthyear} เวลา 
+              ${campaign.detailsbirthtime} ปี ${campaign.detailsbirthconstellation} อายุ 
+              ${campaign.detailsbirthage} ปี
+            </p>`;
     }
     if (campaign.detailstext !== null) {
       detailsHtml += `<p class="text-xl font-bold mb-2">ข้อมูลผู้ร่วมบุญ</p><p class="break-words mb-4">${campaign.detailstext}</p>`;
@@ -397,7 +397,7 @@ export default function CampaignDetail() {
     }
 
     if (campaign.detailswish !== null) {
-      detailsHtml += `<br /><p class="text-xl font-bold mb-2">คำขอพร</p><p class="mb-4 break-words">${campaign.detailswish}</p>`;
+      detailsHtml += `<br /><p class="text-xl font-bold mt-4 mb-2">คำขอพร</p><p class="mb-4 break-words">${campaign.detailswish}</p>`;
     }
 
     // เพิ่มปุ่ม "ส่งรูป" ลงไปใน HTML
@@ -439,7 +439,7 @@ export default function CampaignDetail() {
               className="px-4 py-2 hidden md:block bg-red-500 text-white rounded-lg hover:bg-red-600">รายการที่ดำเนินการแล้ว</button>
           </div>
           <div className="grid grid-cols-1 md:flex gap-2">
-          <button
+            <button
               onClick={() =>
                 (window.location.href = `/admin/manage-campaign/campaign-detail-succeed/${namecampaign.id}`)
               }

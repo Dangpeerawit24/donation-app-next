@@ -375,49 +375,49 @@ export default function CampaignDetail() {
   };
 
   const handleClick = (campaign) => {
-      let detailsHtml = "";
-  
-      // เงื่อนไขการประกอบรายละเอียด
-      if (campaign.detailsname !== null) {
-        detailsHtml += `<p class="text-xl font-bold mb-2">ข้อมูลผู้ร่วมบุญ</p><p class="break-words mb-4">${campaign.detailsname}</p>`;
-      }
-      if (campaign.detailsbirthdate !== null) {
-        detailsHtml += `<p class="text-xl font-bold mb-2">ข้อมูลผู้ร่วมบุญ</p><p class="break-words mb-4">
+    let detailsHtml = "";
+
+    // เงื่อนไขการประกอบรายละเอียด
+    if (campaign.detailsname !== null) {
+      detailsHtml += `<p class="text-xl font-bold mb-2">ข้อมูลผู้ร่วมบุญ</p><p class="break-words mb-2">${campaign.detailsname}</p>`;
+    }
+    if (campaign.detailsbirthdate !== null) {
+      detailsHtml += `
             <br/>
             ${campaign.detailsbirthdate} ${campaign.detailsbirthmonth} ${campaign.detailsbirthyear} เวลา 
             ${campaign.detailsbirthtime} ปี ${campaign.detailsbirthconstellation} อายุ 
             ${campaign.detailsbirthage} ปี
           </p>`;
-      }
-      if (campaign.detailstext !== null) {
-        detailsHtml += `<p class="text-xl font-bold mb-2">ข้อมูลผู้ร่วมบุญ</p><p class="break-words mb-4">${campaign.detailstext}</p>`;
-      }
-      if (campaign.details !== null) {
-        detailsHtml += `<p class="text-xl font-bold mb-2">ข้อมูลผู้ร่วมบุญ</p><p class="break-words mb-4">${campaign.details}</p>`;
-      }
-  
-      if (campaign.detailswish !== null) {
-        detailsHtml += `<br /><p class="text-xl font-bold mb-2">คำขอพร</p><p class="mb-4 break-words">${campaign.detailswish}</p>`;
-      }
-  
-      // เพิ่มปุ่ม "ส่งรูป" ลงไปใน HTML
-      detailsHtml += `<button id="push-image-button" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">ส่งรูป</button>`;
-  
-      // แสดง SweetAlert2 popup พร้อมแนบ event ให้กับปุ่มที่เพิ่มเข้ามา
-      Swal.fire({
-        html: detailsHtml,
-        showConfirmButton: false,
-        confirmButtonText: "ปิด",
-        didOpen: () => {
-          const pushBtn = Swal.getPopup().querySelector("#push-image-button");
-          if (pushBtn) {
-            pushBtn.addEventListener("click", () => {
-              window.location.href = `/line/pushimages/${campaign.transactionID}`;
-            });
-          }
-        },
-      });
-    };
+    }
+    if (campaign.detailstext !== null) {
+      detailsHtml += `<p class="text-xl font-bold mb-2">ข้อมูลผู้ร่วมบุญ</p><p class="break-words mb-4">${campaign.detailstext}</p>`;
+    }
+    if (campaign.details !== null) {
+      detailsHtml += `<p class="text-xl font-bold mb-2">ข้อมูลผู้ร่วมบุญ</p><p class="break-words mb-4">${campaign.details}</p>`;
+    }
+
+    if (campaign.detailswish !== null) {
+      detailsHtml += `<br /><p class="text-xl font-bold mt-4 mb-2">คำขอพร</p><p class="mb-4 break-words">${campaign.detailswish}</p>`;
+    }
+
+    // เพิ่มปุ่ม "ส่งรูป" ลงไปใน HTML
+    detailsHtml += `<button id="push-image-button" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">ส่งรูป</button>`;
+
+    // แสดง SweetAlert2 popup พร้อมแนบ event ให้กับปุ่มที่เพิ่มเข้ามา
+    Swal.fire({
+      html: detailsHtml,
+      showConfirmButton: false,
+      confirmButtonText: "ปิด",
+      didOpen: () => {
+        const pushBtn = Swal.getPopup().querySelector("#push-image-button");
+        if (pushBtn) {
+          pushBtn.addEventListener("click", () => {
+            window.location.href = `/line/pushimages/${campaign.transactionID}`;
+          });
+        }
+      },
+    });
+  };
 
 
   return (
@@ -440,7 +440,7 @@ export default function CampaignDetail() {
               className="px-4 py-2 hidden md:block bg-red-500 text-white rounded-lg hover:bg-red-600">รายการที่ดำเนินการแล้ว</button>
           </div>
           <div className="grid grid-cols-1 md:flex gap-2">
-          <button
+            <button
               onClick={() =>
                 (window.location.href = `/admin/manage-campaign/campaign-detail-succeed/${namecampaign.id}`)
               }
