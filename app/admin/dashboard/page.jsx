@@ -242,10 +242,10 @@ export default function AdminDashboard() {
                         </a>
                       </td>
                       <td className="p-4 truncate-text">
-                        {campaign.price === 1 && (
+                        {campaign.respond === "ข้อมูลของท่านเข้าระบบเรียบร้อยแล้ว" && (
                           <a className="text-blue-600 text-lg" href={`/admin/manage-campaign/campaign-detail-all/${campaign.id}`}>{campaign.name}</a>
                         )}
-                        {campaign.price > 1 && (
+                        {campaign.respond === "แอดมินจะส่งภาพกองบุญให้ท่านได้อนุโมทนาอีกครั้ง" && (
                           <a className="text-blue-600 text-lg" href={`/admin/manage-campaign/campaign-detail/${campaign.id}`}>{campaign.name}</a>
                         )}
                       </td>
@@ -282,10 +282,10 @@ export default function AdminDashboard() {
                   <p className="text-center">{campaign.remaining_stock === 999999 ? "ตามกำลังศรัทธา" : campaign.remaining_stock}</p>
                 </div>
                 <div className="text-center mt-4">
-                  {campaign.price === 1 && (
+                  {campaign.respond === "ข้อมูลของท่านเข้าระบบเรียบร้อยแล้ว" && (
                     <a className="bg-blue-500 text-white py-2 px-4 rounded-lg" href={`/admin/manage-campaign/campaign-detail-all/${campaign.id}`}>รายการร่วมบุญ</a>
                   )}
-                  {campaign.price > 1 && (
+                  {campaign.respond === "แอดมินจะส่งภาพกองบุญให้ท่านได้อนุโมทนาอีกครั้ง" && (
                     <a className="bg-blue-500 text-white py-2 px-4 rounded-lg" href={`/admin/manage-campaign/campaign-detail/${campaign.id}`}>รายการร่วมบุญ</a>
                   )}
                 </div>
