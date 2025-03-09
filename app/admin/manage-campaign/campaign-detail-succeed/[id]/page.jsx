@@ -337,32 +337,52 @@ export default function CampaignDetail() {
         </h1>
         <h2 className="text-xl font-bold text-gray-900  text-center mb-6">#{namecampaign.name}</h2>
 
-        <div className="flex justify-between items-center mb-4">
-          <div className="flex gap-2">
-            <button onClick={copyTable} className="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">คัดลอกข้อมูลในตาราง</button>
-            <button onClick={exportToExcel} className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">บันทึกเป็น Excel</button>
-            {namecampaign.price === 1 && (
+        <div className="grid grid-cols-1 md:flex md:justify-between items-center mb-4">
+          <div className="md:flex gap-2">
+            <button onClick={copyTable} className="px-4 py-2 hidden md:block bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">คัดลอกข้อมูลในตาราง</button>
+            <button onClick={exportToExcel} className="px-4 py-2 hidden md:block bg-blue-500 text-white rounded-lg hover:bg-blue-600">บันทึกเป็น Excel</button>
+            {namecampaign.respond === "ข้อมูลของท่านเข้าระบบเรียบร้อยแล้ว" && (
               <button
                 onClick={() =>
                   (window.location.href = `/admin/manage-campaign/campaign-detail-all/${namecampaign.id}`)
                 }
-                className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
+                className="px-4 py-2 hidden md:block bg-green-500 text-white rounded-lg hover:bg-green-600"
               >
                 รายการที่ยังไม่ดำเนินการ
               </button>
             )}
-            {namecampaign.price > 1 && (
+            {namecampaign.respond === "แอดมินจะส่งภาพกองบุญให้ท่านได้อนุโมทนาอีกครั้ง" && (
               <button
                 onClick={() =>
                   (window.location.href = `/admin/manage-campaign/campaign-detail/${namecampaign.id}`)
                 }
-                className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
+                className="px-4 py-2 hidden md:block bg-green-500 text-white rounded-lg hover:bg-green-600"
               >
                 รายการที่ยังไม่ดำเนินการ
               </button>
             )}
           </div>
-          <div>
+          <div className="grid grid-cols-1 md:flex gap-2">
+          {namecampaign.respond === "ข้อมูลของท่านเข้าระบบเรียบร้อยแล้ว" && (
+              <button
+                onClick={() =>
+                  (window.location.href = `/admin/manage-campaign/campaign-detail-all/${namecampaign.id}`)
+                }
+                className="px-4 py-2 md:hidden bg-green-500 text-white rounded-lg hover:bg-green-600"
+              >
+                รายการที่ยังไม่ดำเนินการ
+              </button>
+            )}
+            {namecampaign.respond === "แอดมินจะส่งภาพกองบุญให้ท่านได้อนุโมทนาอีกครั้ง" && (
+              <button
+                onClick={() =>
+                  (window.location.href = `/admin/manage-campaign/campaign-detail/${namecampaign.id}`)
+                }
+                className="px-4 py-2 md:hidden bg-green-500 text-white rounded-lg hover:bg-green-600"
+              >
+                รายการที่ยังไม่ดำเนินการ
+              </button>
+            )}
             <button
               onClick={handleAddUser}
               className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
@@ -373,7 +393,7 @@ export default function CampaignDetail() {
         </div>
 
         <div className="overflow-x-auto table-container table-fixed">
-          <div className="overflow-auto rounded-lg shadow-lg">
+          <div className="hidden md:block overflow-auto rounded-lg shadow-lg">
             <table id="myTable" className="w-full table-fixed border-collapse bg-white rounded-lg">
               <thead className="bg-gray-200  text-gray-700 ">
                 <tr>
@@ -435,6 +455,44 @@ export default function CampaignDetail() {
                 ))}
               </tbody>
             </table>
+          </div>
+          <div className="md:hidden">
+            <h1 className="text-2xl font-bold text-gray-900 mt-2 text-center">รายการร่วมบุญ</h1>
+            {campaigns.map((campaign, index) => (
+              <div key={campaign.id} className="mb-4 rounded-lg shadow-lg py-6 px-2">
+                <div className=" flex flex-col ">
+                  <div className="flex flex-row justify-center ">
+                    <p className="p-4 text-wrap text-center">
+                      {campaign.detailsname !== null ? campaign.detailsname : ""}
+                      {campaign.detailsbirthdate !== null ? (
+                        <>
+                          <br />
+                          {campaign.detailsbirthdate}{" "}
+                          {campaign.detailsbirthmonth}{" "}
+                          {campaign.detailsbirthyear}{" เวลา "}
+                          {campaign.detailsbirthtime}{" ปี"}
+                          {campaign.detailsbirthconstellation}{" อายุ "}
+                          {campaign.detailsbirthage}{" ปี"}
+                        </>
+                      ) : ""}
+                      {campaign.detailstext !== null ? campaign.detailstext : ""}
+                      {campaign.details !== null ? campaign.details : ""}
+                    </p>
+                  </div>
+                  <div className="flex flex-row justify-between">
+                    <p>
+                      จำนวน: {campaign.value}
+                    </p>
+                    <p>
+                      {campaign.lineName}
+                    </p>
+                    <p>
+                      ที่มา: {campaign.form}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </main>

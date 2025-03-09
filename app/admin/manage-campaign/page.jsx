@@ -513,7 +513,7 @@ export default function ManageCampaign() {
                     </td>
                     <td className="p-4 text-center">
                       <div className="flex justify-center gap-2">
-                        {campaign.price === 1 && (
+                        {campaign.respond === "ข้อมูลของท่านเข้าระบบเรียบร้อยแล้ว" && (
                           <button
                             onClick={() =>
                               (window.location.href = `/admin/manage-campaign/campaign-detail-all/${campaign.id}`)
@@ -523,7 +523,7 @@ export default function ManageCampaign() {
                             รายการร่วมบุญ
                           </button>
                         )}
-                        {campaign.price > 1 && (
+                        {campaign.respond === "แอดมินจะส่งภาพกองบุญให้ท่านได้อนุโมทนาอีกครั้ง" && (
                           <button
                             onClick={() =>
                               (window.location.href = `/admin/manage-campaign/campaign-detail/${campaign.id}`)
@@ -571,7 +571,7 @@ export default function ManageCampaign() {
                 </div>
                 </div>
                 <div className="flex justify-center itm=em-center gap-2 mt-4">
-                  {campaign.price === 1 && (
+                  {campaign.respond === "ข้อมูลของท่านเข้าระบบเรียบร้อยแล้ว" && (
                     <button
                       onClick={() =>
                         (window.location.href = `/admin/manage-campaign/campaign-detail-all/${campaign.id}`)
@@ -581,7 +581,7 @@ export default function ManageCampaign() {
                       รายการร่วมบุญ
                     </button>
                   )}
-                  {campaign.price > 1 && (
+                  {campaign.respond === "แอดมินจะส่งภาพกองบุญให้ท่านได้อนุโมทนาอีกครั้ง" && (
                     <button
                       onClick={() =>
                         (window.location.href = `/admin/manage-campaign/campaign-detail/${campaign.id}`)

@@ -432,17 +432,22 @@ export default function CampaignDetail() {
         </h1>
         <h2 className="text-xl font-bold text-gray-900  text-center mb-6">#{namecampaign.name}</h2>
 
-        <div className="flex justify-between items-center mb-4">
-          <div className="md:flex gap-2 hidden">
-            <button onClick={copyTable} className="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">คัดลอกข้อมูลในตาราง</button>
-            <button onClick={exportToExcel} className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">บันทึกเป็น Excel</button>
+        <div className="grid grid-cols-1 md:flex md:justify-between items-center mb-4">
+          <div className="md:flex gap-2">
+            <button onClick={copyTable} className="px-4 py-2 hidden md:block bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">คัดลอกข้อมูลในตาราง</button>
+            <button onClick={exportToExcel} className="px-4 py-2 hidden md:block bg-blue-500 text-white rounded-lg hover:bg-blue-600">บันทึกเป็น Excel</button>
             <button
               onClick={() =>
                 (window.location.href = `/admin/manage-campaign/campaign-detail-succeed/${namecampaign.id}`)
               }
-              className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">รายการที่ดำเนินการแล้ว</button>
+              className="px-4 py-2 hidden md:block bg-red-500 text-white rounded-lg hover:bg-red-600">รายการที่ดำเนินการแล้ว</button>
           </div>
-          <div className="flex gap-2">
+          <div className="grid grid-cols-1 md:flex gap-2">
+          <button
+              onClick={() =>
+                (window.location.href = `/admin/manage-campaign/campaign-detail-succeed/${namecampaign.id}`)
+              }
+              className="px-4 py-2 bg-red-500 md:hidden text-white rounded-lg hover:bg-red-600">รายการที่ดำเนินการแล้ว</button>
             <button
               onClick={() => handlesucceed(namecampaign.id)}
               className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
