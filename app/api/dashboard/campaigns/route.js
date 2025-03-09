@@ -14,6 +14,7 @@ export async function GET() {
     c.name,
     c.stock,
     c.price,
+    c.respond,
     c.campaign_img,
     COALESCE(SUM(ct.value), 0) AS total_donated,
     (c.stock - COALESCE(SUM(ct.value), 0)) AS remaining_stock
