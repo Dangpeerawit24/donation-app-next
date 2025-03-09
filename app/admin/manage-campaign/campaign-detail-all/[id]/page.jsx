@@ -378,15 +378,12 @@ export default function CampaignDetail() {
     let detailsHtml = "";
 
     // เงื่อนไขการประกอบรายละเอียด
-    if (campaign.detailsname !== null && campaign.detailsbirthdate === null) {
-      detailsHtml += `<p class="text-xl font-bold mb-2">ข้อมูลผู้ร่วมบุญ</p><p class="break-words mb-4">${campaign.detailsname}</p>`;
-    }
-    if (campaign.detailsname !== null && campaign.detailswish !== null) {
+    if (campaign.detailsname !== null) {
       detailsHtml += `<p class="text-xl font-bold mb-2">ข้อมูลผู้ร่วมบุญ</p><p class="break-words mb-4">${campaign.detailsname}</p>`;
     }
     if (campaign.detailsbirthdate !== null) {
       detailsHtml += `<p class="text-xl font-bold mb-2">ข้อมูลผู้ร่วมบุญ</p><p class="break-words mb-4">
-          ${campaign.detailsname}<br/>
+          <br/>
           ${campaign.detailsbirthdate} ${campaign.detailsbirthmonth} ${campaign.detailsbirthyear} เวลา 
           ${campaign.detailsbirthtime} ปี ${campaign.detailsbirthconstellation} อายุ 
           ${campaign.detailsbirthage} ปี
