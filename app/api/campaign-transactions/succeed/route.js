@@ -24,7 +24,7 @@ export async function POST(req) {
     const campaignssucceed = await prisma.campaign_transactions.updateMany({
       where: { 
         campaignsid: id,
-        form: { in: ["P", "IB"] }
+        form: { in: ["P", "IB", "L"] }
       },
       data: { status: "ส่งภาพกองบุญแล้ว" },
     });    
