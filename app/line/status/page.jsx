@@ -60,10 +60,10 @@ const Linestatus = () => {
                         <div className="bg-gray-200 rounded-lg">
                             {transactions?.length > 0 ? (
                                 transactions.map((transaction, index) => (
-                                    <div key={transaction.id} className="flex flex-row gap-4 p-4">
-                                        <div className="w-screen min-w-[375px] max-w-[425px] flex flex-col justify-between">
-                                            <h1 className="w-screen min-w-[375px] max-w-[425px] truncate-text text-nowrap">กองบุญ{transaction.campaignsname}</h1>
-                                            <span className="w-screen min-w-[375px] max-w-[425px] truncate-text text-nowrap">{transaction.detailsname}</span>
+                                    <div key={transaction.id} className="w-screen min-w-[375px] max-w-[425px] truncate-text text-nowrap flex flex-row gap-4 p-4">
+                                        <div className="w-[60%] flex flex-col justify-between">
+                                            <h1 className="truncate-text text-nowrap">กองบุญ{transaction.campaignsname}</h1>
+                                            <span className="truncate-text">{transaction.detailsname}</span>
                                         </div>
                                         <div className="w-[40%] flex flex-col justify-between items-center">
                                             {transaction.status === "ส่งภาพกองบุญแล้ว" && (
