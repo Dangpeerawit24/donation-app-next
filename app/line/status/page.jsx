@@ -62,7 +62,7 @@ const Linestatus = () => {
                                 transactions.map((transaction, index) => (
                                     <div key={transaction.id} className="flex flex-row gap-4 p-4">
                                         <div className="w-full flex flex-col justify-between">
-                                            <h1 className="truncate-text">กองบุญ{transaction.campaignsname}</h1>
+                                            <h1 className="truncate-text text-nowrap">กองบุญ{transaction.campaignsname}</h1>
                                             <span className="truncate-text">{transaction.detailsname}</span>
                                         </div>
                                         <div className="w-[40%] flex flex-col justify-between items-center">
