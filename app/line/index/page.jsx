@@ -37,7 +37,6 @@ const PushImages = () => {
 
     }, []);
 
-
     const fetchdata = async () => {
         try {
             const res = await fetch("/api/line/campaigns");
@@ -78,7 +77,7 @@ const PushImages = () => {
                 style={{ backgroundImage: "url('/img/Background2.png')" }}
             >
 
-                <div className="row w-full h-20 top-0 bg-red-950 content-center justify-items-center">
+                <div className="row w-screen min-w-[375px] max-w-[425px] z-50 h-16 top-0 fixed bg-red-950 content-center justify-items-center">
                     <nav className="flex items-center">
                         <img src="https://donation.kuanimtungpichai.com/img/AdminLogo.png" width="50px" height="50px" alt="" />
                         <h3 className=" mx-2 text-white text-xl">ศาลพระโพธิสัตว์กวนอิมทุ่งพิชัย</h3>
@@ -86,9 +85,9 @@ const PushImages = () => {
                 </div>
                 {campaigns.length !== 0 && (
                     <>
-                        <h1 className="mt-4 text-xl text-center">กองบุญที่เปิดให้ร่วมบุญขณะนี้</h1>
+                        {/* <h1 className="mt-4 text-xl text-center">กองบุญที่เปิดให้ร่วมบุญขณะนี้</h1> */}
 
-                        <div className="mt-4 max-w-[425px] contain-content px-4 overflow-y-auto">
+                        <div className="max-w-[425px] my-20 contain-content px-4 overflow-y-auto">
                             <div className="w-full px-6 pb-6 rounded-3xl shadow-lg ">
                                 <h2 className="text-xl text-center break-words">กองบุญ<br />{campaign.name}</h2>
                                 {campaign.campaign_img && (
@@ -123,7 +122,7 @@ const PushImages = () => {
                                 <p className="mt-4 text-center text-lg">
                                     ร่วมบุญ {campaign.price === 1 ? "ตามกำลังศรัทธา" : `${campaign.price} บาท`}
                                 </p>
-                                {campaign.price !== 1 && (
+                                {campaign.stock > 1 && campaign.stock < 300 && (
                                     <p className="text-center text-md">รับเจ้าภาพจำนวน {campaign.stock} กองบุญ</p>
                                 )}
                                 <h2 className="text-lg text-start break-words">{campaign.description}</h2>
@@ -168,11 +167,19 @@ const PushImages = () => {
 
                 {campaigns.length === 0 && (
                     <>
-                        <div className="flex items-center justify-center min-h-screen bg-gray-300">
+                        <div className="flex items-center justify-center min-h-screen">
                             <p className="text-xl text-gray-500">ไม่มีกองบุญที่เปิดให้ร่วมบุญในขณะนี้</p>
                         </div>
                     </>
                 )}
+                <div className="grid grid-cols-2 w-screen min-w-[375px] max-w-[425px] h-16 rounded-t-xl bg-red-950 fixed bottom-0">
+                    <div className="text-lg text-white text-center py-4">
+                        <a href="/line/index">หน้าหลัก</a>
+                    </div>
+                    <div className="text-lg text-white text-center py-4">
+                        <a href="/line/status">สถานะกองบุญ</a>
+                    </div>
+                </div>
             </div>
         </>
     );

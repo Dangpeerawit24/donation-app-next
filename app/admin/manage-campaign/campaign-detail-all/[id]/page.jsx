@@ -383,7 +383,7 @@ export default function CampaignDetail() {
     }
     if (campaign.detailsbirthdate !== null) {
       detailsHtml += `
-              <br/>
+              <p>
               ${campaign.detailsbirthdate} ${campaign.detailsbirthmonth} ${campaign.detailsbirthyear} เวลา 
               ${campaign.detailsbirthtime} ปี ${campaign.detailsbirthconstellation} อายุ 
               ${campaign.detailsbirthage} ปี
