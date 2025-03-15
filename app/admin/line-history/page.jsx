@@ -8,6 +8,7 @@ import Navbar from "@/components/Navbar";
 import ScrollToTop from "@/components/ScrollToTop";
 import ReactDOM from "react-dom/client";
 import { X } from "lucide-react";
+import axios from "axios";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
