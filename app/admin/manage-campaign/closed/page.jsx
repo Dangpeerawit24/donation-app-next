@@ -10,6 +10,7 @@ import ReactDOM from "react-dom/client";
 import { X } from "lucide-react";
 import { useParams } from "next/navigation"
 import ScrollToTop from "@/components/ScrollToTop";
+import axios from "axios";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -17,7 +18,6 @@ export default function CampaignClosed() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [campaigns, setCampaigns] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   // ✅ ตรวจสอบสิทธิ์ (อนุญาตเฉพาะ Admin)
   useEffect(() => {
@@ -35,14 +35,11 @@ export default function CampaignClosed() {
 
   const fetchdata = async () => {
     try {
-      const res = await fetch("/api/campaigns/closed");
-      const data = await res.json();
-      setCampaigns(data);
-      setLoading(false);
+      const res = await axios.get(`/api/campaigns/closed`);
+      setCampaigns(res.data);
     } catch (error) {
       console.error("เกิดข้อผิดพลาดในการดึงข้อมูล:", error);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -53,64 +50,6 @@ export default function CampaignClosed() {
 
     return () => clearInterval(intervalId);
   }, []);
-
-  const handleEditCampaign = async (campaign) => {
-    const { value: formValues } = await Swal.fire({
-      title: "แก้ไขสถานะกองบุญ",
-      html: `
-      <div class="w-full max-w-lg mx-auto p-4">
-          <!-- สถานะกองบุญ -->
-          <div class="flex items-center gap-2 mb-4">
-            <p class="w-1/3 text-lg text-start font-semibold">สถานะกองบุญ:</p>
-            <select id="swal-status" class="w-2/3 p-2 border border-gray-300 rounded-lg">
-              <option value="เปิดกองบุญ" ${campaign.status === "เปิดกองบุญ" ? "selected" : ""}>เปิดกองบุญ</option>
-              <option value="รอเปิด" ${campaign.status === "รอเปิด" ? "selected" : ""}>รอเปิด</option>
-              <option value="ปิดกองบุญแล้ว" ${campaign.status === "ปิดกองบุญแล้ว" ? "selected" : ""}>ปิดกองบุญแล้ว</option>
-            </select>
-          </div>
-      `,
-      showCancelButton: true,
-      cancelButtonText: "ยกเลิก",
-      focusConfirm: false,
-      preConfirm: () => {
-        return {
-          id: campaign.id,
-          status: document.getElementById("swal-status").value.trim(),
-        };
-      },
-    });
-
-    if (!formValues) return;
-
-    try {
-      const res = await fetch("/api/campaigns/closed", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json", // ✅ ใช้ JSON แทน FormData
-        },
-        body: JSON.stringify(formValues),
-      });
-
-      if (!res.ok) throw new Error("แก้ไขกองบุญไม่สำเร็จ");
-      Swal.fire("สำเร็จ!", "แก้ไขข้อมูลกองบุญแล้ว", "success")
-    } catch (error) {
-      Swal.fire("เกิดข้อผิดพลาด!", error.message, "error");
-    }
-  };
-
-  if (loading) {
-    return (
-      <div
-        id="loader"
-        className="fixed inset-0 bg-gray-200 bg-opacity-50 flex items-center justify-center z-50"
-      >
-        <div className="flex flex-col items-center">
-          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent border-dashed rounded-full animate-spin"></div>
-          <p className="mt-4 text-blue-400 text-lg font-semibold">Loading...</p>
-        </div>
-      </div>
-    );
-  }
 
   const imgswl = async (img) => {
     await Swal.fire({

@@ -8,12 +8,12 @@ import Navbar from "@/components/Navbar";
 import ScrollToTop from "@/components/ScrollToTop";
 import ReactDOM from "react-dom/client";
 import { X } from "lucide-react";
+import axios from "axios";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export default function AdminDashboard() {
   const { data: session, status } = useSession();
-  const [loading, setLoading] = useState(true);
   const [campaignCountMonth, setcampaignCountMonth] = useState(true);
   const [campaignCountYear, setcampaignCountYear] = useState(true);
   const [total_value_year, settotal_value_year] = useState(true);
@@ -30,22 +30,16 @@ export default function AdminDashboard() {
         text: "คุณไม่มีสิทธิ์เข้าถึงหน้านี้",
         icon: "error",
       }).then(() => router.push("/login"));
-    } else {
-      // fetchUsers();
-      setLoading(false);
     }
   }, [session, status, router]);
 
   const fetchdata = async () => {
     try {
-      const res = await fetch("/api/dashboard/campaigns");
-      const data = await res.json();
-      setCampaigns(data);
-      setLoading(false);
+      const response = await axios.get('/api/dashboard/campaigns');
+      setCampaigns(response.data);
     } catch (error) {
       console.error("เกิดข้อผิดพลาดในการดึงข้อมูลสมาชิก:", error);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -59,36 +53,32 @@ export default function AdminDashboard() {
 
   const fetchtotal_campaign_month = async () => {
     try {
-      const res = await fetch("/api/dashboard/total_campaign_month");
-      const data = await res.json();
-      setcampaignCountMonth(data);
+      const response = await axios.get('/api/dashboard/total_campaign_month');
+      setcampaignCountMonth(response.data);
     } catch (error) {
       console.error("เกิดข้อผิดพลาดในการดึงข้อมูลสมาชิก:", error);
     }
   };
   const fetchtotal_value_month = async () => {
     try {
-      const res = await fetch("/api/dashboard/total_value_month");
-      const data = await res.json();
-      settotal_value_month(data);
+      const response = await axios.get('/api/dashboard/total_value_month');
+      settotal_value_month(response.data);
     } catch (error) {
       console.error("เกิดข้อผิดพลาดในการดึงข้อมูลสมาชิก:", error);
     }
   };
   const fetchtotal_campaign_year = async () => {
     try {
-      const res = await fetch("/api/dashboard/total_campaign_year");
-      const data = await res.json();
-      setcampaignCountYear(data);
+      const response = await axios.get('/api/dashboard/total_campaign_year');
+      setcampaignCountYear(response.data);
     } catch (error) {
       console.error("เกิดข้อผิดพลาดในการดึงข้อมูลสมาชิก:", error);
     }
   };
   const fetchtotal_value_year = async () => {
     try {
-      const res = await fetch("/api/dashboard/total_value_year");
-      const data = await res.json();
-      settotal_value_year(data);
+      const response = await axios.get('/api/dashboard/total_value_year');
+      settotal_value_year(response.data);
     } catch (error) {
       console.error("เกิดข้อผิดพลาดในการดึงข้อมูลสมาชิก:", error);
     }
@@ -103,30 +93,12 @@ export default function AdminDashboard() {
       fetchtotal_value_month();
     };
 
-
     fetchData();
-
 
     const intervalId = setInterval(fetchData, 5000);
 
     return () => clearInterval(intervalId);
   }, []);
-
-
-
-  if (loading) {
-    return (
-      <div
-        id="loader"
-        className="fixed inset-0 bg-gray-200 bg-opacity-50 flex items-center justify-center z-50"
-      >
-        <div className="flex flex-col items-center">
-          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent border-dashed rounded-full animate-spin"></div>
-          <p className="mt-4 text-blue-400 text-lg font-semibold">Loading...</p>
-        </div>
-      </div>
-    );
-  }
 
   const imgswl = async (img) => {
     await Swal.fire({

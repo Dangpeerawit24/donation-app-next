@@ -10,6 +10,7 @@ import ReactDOM from "react-dom/client";
 import { X } from "lucide-react";
 import ScrollToTop from "@/components/ScrollToTop";
 import { useParams } from "next/navigation"
+import axios from "axios";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -18,7 +19,6 @@ export default function ManageCampaign() {
   const router = useRouter();
   const [campaigns, setCampaigns] = useState([]);
   const [nametopic, setNametopic] = useState([]);
-  const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const totalAllRevenue = campaigns.reduce((acc, c) => acc + c.total_value * c.price, 0);
 
@@ -37,28 +37,21 @@ export default function ManageCampaign() {
 
   const fetchdata = async () => {
     try {
-      const res = await fetch(`/api/topics/topic-detail?id=${id}`);
-      const data = await res.json();
-      setCampaigns(data);
-      setLoading(false);
+      const res = await axios.get(`/api/topics/topic-detail?id=${id}`);
+      setCampaigns(res.data);
       fetchname_topic();
     } catch (error) {
       console.error("เกิดข้อผิดพลาดในการดึงข้อมูลสมาชิก:", error);
     }
-    setLoading(false);
   };
 
   const fetchname_topic = async () => {
     try {
-      const res = await fetch(`/api/topics/name?id=${id}`);
-      const data = await res.json();
-      console.log(data);
-      setNametopic(data);
-      setLoading(false);
+      const res = await axios.get(`/api/topics/name?id=${id}`);
+      setNametopic(res.data);
     } catch (error) {
       console.error("เกิดข้อผิดพลาดในการดึงข้อมูลสมาชิก:", error);
     }
-    setLoading(false);
   };
 
   useEffect(() => {

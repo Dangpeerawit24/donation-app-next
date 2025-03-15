@@ -1,20 +1,20 @@
 @import "tailwindcss";
 
 .no-border {
-    border: none !important; /* ลบเส้นขอบ */
-    box-shadow: none !important; /* ลบเงาที่อาจเป็นขอบดำ */
-    background: transparent !important; /* พื้นหลังโปร่งใส */
-  }
-  
-  .truncate-text {
-    max-width: 100%;
-    overflow: hidden; 
-  }
-  
-  .xs-mt-16 {
-    margin-top: 64px;
-  }
+  border: none !important; /* ลบเส้นขอบ */
+  box-shadow: none !important; /* ลบเงาที่อาจเป็นขอบดำ */
+  background: transparent !important; /* พื้นหลังโปร่งใส */
+}
 
-  .xs-mt-10 {
-    margin-top: 40px;
-  }
+.truncate-text {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.xs-mt-16 {
+  margin-top: 64px;
+}
+
+.xs-mt-10 {
+  margin-top: 40px;
+}

@@ -12,6 +12,7 @@ import { useParams } from "next/navigation"
 import ScrollToTop from "@/components/ScrollToTop";
 import Image from "next/image";
 import * as XLSX from "xlsx";
+import axios from "axios";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -23,7 +24,6 @@ export default function CampaignDetail() {
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
 
-  // ✅ ตรวจสอบสิทธิ์ (อนุญาตเฉพาะ Admin)
   useEffect(() => {
     if (status === "loading") return;
 
@@ -39,14 +39,11 @@ export default function CampaignDetail() {
 
   const fetchdata = async () => {
     try {
-      const res = await fetch(`/api/campaign-transactions/succeed?id=${id}`);
-      const data = await res.json();
-      setCampaigns(data);
-      setLoading(false);
+      const res =await axios(`/api/campaign-transactions/succeed?id=${id}`)
+      setCampaigns(res.data);
     } catch (error) {
       console.error("เกิดข้อผิดพลาดในการดึงข้อมูลสมาชิก:", error);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -59,9 +56,8 @@ export default function CampaignDetail() {
   }, []);
 
   const fetachName = async (id) => {
-    const res = await fetch(`/api/campaign-transactions/name?id=${id}`);
-    const data = await res.json();
-    setnamecampaign(data);
+    const res = await axios.get(`/api/campaign-transactions/name?id=${id}`)
+    setnamecampaign(res.data);
   };
 
   useEffect(() => {
@@ -283,20 +279,6 @@ export default function CampaignDetail() {
     // บันทึกไฟล์เป็น Excel (ดาวน์โหลด)
     XLSX.writeFile(wb, "myTableData.xlsx");
   };
-
-  if (loading) {
-    return (
-      <div
-        id="loader"
-        className="fixed inset-0 bg-gray-200 bg-opacity-50 flex items-center justify-center z-50"
-      >
-        <div className="flex flex-col items-center">
-          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent border-dashed rounded-full animate-spin"></div>
-          <p className="mt-4 text-blue-400 text-lg font-semibold">Loading...</p>
-        </div>
-      </div>
-    );
-  }
 
   const imgswl = async (img) => {
     await Swal.fire({

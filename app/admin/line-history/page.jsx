@@ -13,7 +13,6 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export default function LineHistory() {
   const { data: session, status } = useSession();
-  const [loading, setLoading] = useState(true);
   const [Lineusers, setLineusers] = useState([]);
   const router = useRouter();
 
@@ -26,21 +25,16 @@ export default function LineHistory() {
         text: "คุณไม่มีสิทธิ์เข้าถึงหน้านี้",
         icon: "error",
       }).then(() => router.push("/login"));
-    } else {
-      setLoading(false);
     }
   }, [session, status, router]);
 
   const fetchdata = async () => {
     try {
-      const res = await fetch("/api/line-history");
-      const data = await res.json();
-      setLineusers(data);
-      setLoading(false);
+      const response = await axios.get('/api/line-history');
+      setLineusers(response.data);
     } catch (error) {
       console.error("เกิดข้อผิดพลาดในการดึงข้อมูลสมาชิก:", error);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -51,20 +45,6 @@ export default function LineHistory() {
 
     return () => clearInterval(intervalId);
   }, []);
-
-  if (loading) {
-    return (
-      <div
-        id="loader"
-        className="fixed inset-0 bg-gray-200 bg-opacity-50 flex items-center justify-center z-50"
-      >
-        <div className="flex flex-col items-center">
-          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent border-dashed rounded-full animate-spin"></div>
-          <p className="mt-4 text-blue-400 text-lg font-semibold">Loading...</p>
-        </div>
-      </div>
-    );
-  }
 
   const imgswl = async (img) => {
     await Swal.fire({
@@ -145,7 +125,7 @@ export default function LineHistory() {
             </table>
           </div>
           {Lineusers.map((Lineuser, index) => (
-            <div key={Lineuser.id} className="mb-4 rounded-lg shadow-lg py-6 px-2 bg-sky-200 ">
+            <div key={Lineuser.id} className="block md:hidden mb-4 rounded-lg shadow-lg py-6 px-2 bg-sky-200 ">
               <div className=" flex flex-col ">
                 <div className="px-2 text-lg flex justify-between items-center">
                   <a
