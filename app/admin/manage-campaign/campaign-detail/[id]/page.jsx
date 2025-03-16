@@ -86,6 +86,27 @@ export default function CampaignDetail() {
   }
 
   if (typeof window !== "undefined") {
+    window.addCommas2 = function () {
+      const textarea = document.getElementById("swal-details");
+      const value = document.getElementById("swal-value");
+      if (!textarea || !value) return;
+
+      const lines = textarea.value.split("\n");
+
+      const updatedLines = lines.map((line, index) => {
+        return line.trim() !== "" && index < lines.length - 1
+          ? `${line}/nn/`
+          : line;
+      });
+
+      textarea.value = updatedLines.join("\n");
+
+      value.value = lines.length;
+      addCommasWish2();
+    };
+  }
+
+  if (typeof window !== "undefined") {
     window.addCommasWish = function () {
       const textarea = document.getElementById("swal-detailswish");
       const value = document.getElementById("swal-value");
@@ -96,6 +117,24 @@ export default function CampaignDetail() {
       const updatedLines = lines.map((line, index) => {
         return line.trim() !== "" && index < lines.length - 1
           ? `${line}/n/`
+          : line;
+      });
+
+      textarea.value = updatedLines.join("\n");
+    };
+  }
+
+  if (typeof window !== "undefined") {
+    window.addCommasWish2 = function () {
+      const textarea = document.getElementById("swal-detailswish");
+      const value = document.getElementById("swal-value");
+      if (!textarea || !value) return;
+
+      const lines = textarea.value.split("\n");
+
+      const updatedLines = lines.map((line, index) => {
+        return line.trim() !== "" && index < lines.length - 1
+          ? `${line}/nn/`
           : line;
       });
 
@@ -116,6 +155,7 @@ export default function CampaignDetail() {
           <div class="mb-4">
             <label class="block text-lg font-semibold mb-1">คำขอพร:</label>
             <textarea id="swal-detailswish" rows="5" class="w-full p-2 border border-gray-300 rounded-lg"></textarea>
+            <button class="p-1 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="addCommas2()">ไม่แยกรายการ</button>
             <button class="p-1 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="addCommas()">แยกรายการ</button>
             </div>
     

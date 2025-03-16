@@ -81,6 +81,28 @@ export default function CampaignDetail() {
       textarea.value = updatedLines.join("\n");
 
       value.value = lines.length;
+      addCommasWish();
+    };
+  }
+
+  if (typeof window !== "undefined") {
+    window.addCommas2 = function () {
+      const textarea = document.getElementById("swal-details");
+      const value = document.getElementById("swal-value");
+      if (!textarea || !value) return;
+
+      const lines = textarea.value.split("\n");
+
+      const updatedLines = lines.map((line, index) => {
+        return line.trim() !== "" && index < lines.length - 1
+          ? `${line}/nn/`
+          : line;
+      });
+
+      textarea.value = updatedLines.join("\n");
+
+      value.value = lines.length;
+      addCommasWish2();
     };
   }
 
@@ -99,8 +121,24 @@ export default function CampaignDetail() {
       });
 
       textarea.value = updatedLines.join("\n");
+    };
+  }
 
-      value.value = lines.length;
+  if (typeof window !== "undefined") {
+    window.addCommasWish2 = function () {
+      const textarea = document.getElementById("swal-detailswish");
+      const value = document.getElementById("swal-value");
+      if (!textarea || !value) return;
+
+      const lines = textarea.value.split("\n");
+
+      const updatedLines = lines.map((line, index) => {
+        return line.trim() !== "" && index < lines.length - 1
+          ? `${line}/nn/`
+          : line;
+      });
+
+      textarea.value = updatedLines.join("\n");
     };
   }
 
@@ -115,16 +153,16 @@ export default function CampaignDetail() {
           <div class="mb-4">
             <label class="block text-lg font-semibold mb-1">รายนาม:</label>
             <textarea id="swal-details" rows="5" class="w-full p-2 border border-gray-300 rounded-lg" required></textarea>
-          <button class="p-1 bg-blue-500 text-white rounded hover:bg-blue-600"
-                                onclick="addCommas()">แยกรายการ</button>
+         
             </div>
           
   
           <div class="mb-4">
             <label class="block text-lg font-semibold mb-1">คำขอพร:</label>
             <textarea id="swal-detailswish" rows="5" class="w-full p-2 border border-gray-300 rounded-lg"></textarea>
-            <button class="p-1 bg-blue-500 text-white rounded hover:bg-blue-600"
-                                onclick="addCommasWish()">แยกรายการ</button>
+            <button class="p-1 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="addCommas2()">ไม่แยกรายการ</button>
+             <button class="p-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+                                onclick="addCommas()">แยกรายการ</button>
           </div>
 
           <div class="grid grid-cols-1 gap-4 mb-4">
