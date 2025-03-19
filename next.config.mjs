@@ -1,12 +1,18 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+import nextPwa from "next-pwa";
+
+const withPWA = nextPwa({
+    dest: "public",
+    disable: process.env.NODE_ENV === "development",
+    register: true,
+    skipWaiting: true,
+});
+
+const nextConfig = withPWA({
     env: {
         TZ: "Asia/Bangkok",
     },
     images: {
-        domains: [
-            'localhost',
-        ],
+        domains: ["localhost"],
         remotePatterns: [
             {
                 protocol: "http",
@@ -18,7 +24,7 @@ const nextConfig = {
     },
     experimental: {
         serverActions: {
-            bodySizeLimit: '3mb',
+            bodySizeLimit: "3mb",
         },
     },
     typescript: {
@@ -27,6 +33,6 @@ const nextConfig = {
     eslint: {
         ignoreDuringBuilds: true,
     },
-};
+});
 
 export default nextConfig;
