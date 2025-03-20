@@ -13,7 +13,7 @@ export async function GET() {
             WHERE c.status = 'เปิดกองบุญ'
             GROUP BY c.id
             HAVING c.stock > COALESCE(SUM(t.value), 0)
-            ORDER BY c.updated_at DESC;
+            ORDER BY c.updatedAt DESC;
         `;
 
         return NextResponse.json(campaigns);
