@@ -24,6 +24,7 @@ export async function GET(req) {
                 lineId: true,
                 lineName: true,
                 value: true,
+                campaignsid: true,
             },
         });
 
