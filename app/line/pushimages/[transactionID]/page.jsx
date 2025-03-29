@@ -149,7 +149,7 @@ const PushImages = () => {
         timerProgressBar: true,
         showConfirmButton: false,
       }).then(() => {
-        window.location.href = "/login";
+        window.location.href = `/admin/manage-campaign/campaign-detail/${transactionData.campaignsid}`;
       });
     } catch (error) {
       console.error("Error:", error);
