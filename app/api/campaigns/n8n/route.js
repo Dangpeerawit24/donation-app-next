@@ -6,6 +6,9 @@ const prisma = new PrismaClient();
 // ✅ อ่านข้อมูลสมาชิกทั้งหมด
 export async function GET() {
   const campaigns = await prisma.campaign.findMany({
+    where: {
+      status: 'เปิดกองบุญ',
+    },
     select: {
       name: true,
       description: true,
