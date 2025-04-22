@@ -10,6 +10,7 @@ export async function GET() {
       status: 'เปิดกองบุญ',
     },
     select: {
+      id: true,
       name: true,
       description: true,
       price: true,
