@@ -16,7 +16,9 @@ const PushImages = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const res = await fetch(`/api/line/get-transaction?transactionID=${transactionID}`);
+      const res = await fetch(
+        `/api/line/get-transaction?transactionID=${transactionID}`
+      );
       const data = await res.json();
       setTransactionData(data.transaction[0]);
     }
@@ -108,8 +110,12 @@ const PushImages = () => {
     e.preventDefault();
 
     const form = e.target;
-    const allFileInputs = Array.from(form.querySelectorAll('input[type="file"]'));
-    const hasFile = allFileInputs.some((input) => input.files && input.files.length > 0);
+    const allFileInputs = Array.from(
+      form.querySelectorAll('input[type="file"]')
+    );
+    const hasFile = allFileInputs.some(
+      (input) => input.files && input.files.length > 0
+    );
 
     if (!hasFile) {
       Swal.fire({
@@ -131,8 +137,18 @@ const PushImages = () => {
 
     const formData = new FormData(form);
 
+    let urltopush = ""; // ประกาศข้างนอก if
+
+    if (transactionData.form === "L") {
+      urltopush = "/api/line/pushimages";
+    } else if (transactionData.form === "IB") {
+      urltopush = "/api/line/pushimages/fb/message";
+    } else if (transactionData.form === "P") {
+      urltopush = "/api/line/pushimages/fb/comment";
+    }
+
     try {
-      const res = await fetch("/api/line/pushimages", {
+      const res = await fetch(urltopush, {
         method: "POST",
         body: formData,
       });
@@ -170,8 +186,7 @@ const PushImages = () => {
         <div
           className="w-screen min-w-[375px] max-w-[425px] fixed bg-top bg-no-repeat bg-contain h-[200px]"
           style={{ backgroundImage: "url('/img/bannerimg.png')" }}
-        >
-        </div>
+        ></div>
         <div className="w-full flex justify-center items-center mt-[160px] xs:mt-[180px]">
           <h1 className="text-xl">อัพโหลดภาพส่งลูกบุญ</h1>
         </div>
@@ -184,11 +199,15 @@ const PushImages = () => {
         />
         <div className="w-full grid grid-cols-2 gap-2 px-6">
           <p className="text-md text-start">กองบุญ</p>
-          <p className="text-md text-end text-nowrap truncate-text">{transactionData?.campaignsname}</p>
+          <p className="text-md text-end text-nowrap truncate-text">
+            {transactionData?.campaignsname}
+          </p>
           <p className="text-md text-start">จำนวน</p>
           <p className="text-md text-end">{transactionData?.value}</p>
           <p className="text-md text-start">ชื่อไลน์</p>
-          <p className="text-md text-end text-nowrap truncate-text">{transactionData?.lineName}</p>
+          <p className="text-md text-end text-nowrap truncate-text">
+            {transactionData?.lineName}
+          </p>
         </div>
         <Image
           className="my-2 px-6 w-full"
@@ -206,9 +225,15 @@ const PushImages = () => {
               className="my-4"
             >
               {/* ส่วนแสดงช่องอัปโหลดไฟล์ */}
-              <div className="w-full flex flex-col items-center justify-center gap-2 px-2" id="fileUploadContainer">
+              <div
+                className="w-full flex flex-col items-center justify-center gap-2 px-2"
+                id="fileUploadContainer"
+              >
                 {fileInputs.map((fileInput) => (
-                  <div className="w-full rounded-full bg-gray-200 flex flex-row items-center justify-center py-2 px-4" key={fileInput.id}>
+                  <div
+                    className="w-full rounded-full bg-gray-200 flex flex-row items-center justify-center py-2 px-4"
+                    key={fileInput.id}
+                  >
                     <input
                       type="file"
                       name="url_img[]"
@@ -226,9 +251,21 @@ const PushImages = () => {
                 ))}
               </div>
               <div>
-                <input type="hidden" name="id" value={transactionData?.id || ""} />
-                <input type="hidden" name="campaignsname" value={transactionData?.campaignsname || ""} />
-                <input type="hidden" name="userid" value={transactionData?.lineId || ""} />
+                <input
+                  type="hidden"
+                  name="id"
+                  value={transactionData?.id || ""}
+                />
+                <input
+                  type="hidden"
+                  name="campaignsname"
+                  value={transactionData?.campaignsname || ""}
+                />
+                <input
+                  type="hidden"
+                  name="userid"
+                  value={transactionData?.lineId || ""}
+                />
               </div>
 
               <div className="w-full mt-4 flex flex-col items-center justify-center gap-2 px-6">
@@ -239,7 +276,10 @@ const PushImages = () => {
                 >
                   เพิ่มรูป
                 </button>
-                <button className="py-2 px-4 bg-green-800 rounded-lg text-white text-lg" type="submit">
+                <button
+                  className="py-2 px-4 bg-green-800 rounded-lg text-white text-lg"
+                  type="submit"
+                >
                   ยืนยันส่งภาพกองบุญ
                 </button>
               </div>

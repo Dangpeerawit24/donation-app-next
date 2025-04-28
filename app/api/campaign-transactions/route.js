@@ -54,18 +54,49 @@ export async function POST(req) {
     let lineNameinsert = lineName;
     let lineLineIdinsert = null;
     let lineUserData = [];
-    if (lineName) {
-      lineUserData = await prisma.line_users.findMany({
-        where: { display_name: lineName },
-        orderBy: { id: "desc" },
-        take: 1,
-      });
-    }
-
-    // ถ้ามีข้อมูลจากฐานข้อมูล ให้นำข้อมูลจาก element แรกใน array มาใช้
-    if (lineUserData && lineUserData.length > 0) {
-      lineNameinsert = lineUserData[0].display_name;
-      lineLineIdinsert = lineUserData[0].user_id;
+    
+    if ( form === "L" ) {
+      if (lineName) {
+        lineUserData = await prisma.line_users.findMany({
+          where: { display_name: lineName },
+          orderBy: { id: "desc" },
+          take: 1,
+        });
+      }
+  
+      // ถ้ามีข้อมูลจากฐานข้อมูล ให้นำข้อมูลจาก element แรกใน array มาใช้
+      if (lineUserData && lineUserData.length > 0) {
+        lineNameinsert = lineUserData[0].display_name;
+        lineLineIdinsert = lineUserData[0].user_id;
+      }
+    } else if ( form === "IB" ) {
+      if (lineName) {
+        lineUserData = await prisma.fb_message.findMany({
+          where: { name: lineName },
+          orderBy: { id: "desc" },
+          take: 1,
+        });
+      }
+  
+      // ถ้ามีข้อมูลจากฐานข้อมูล ให้นำข้อมูลจาก element แรกใน array มาใช้
+      if (lineUserData && lineUserData.length > 0) {
+        lineNameinsert = lineUserData[0].name;
+        lineLineIdinsert = lineUserData[0].fb_id;
+      }
+    } else if ( form === "P" ) {
+      if (lineName) {
+        lineUserData = await prisma.fb_comment.findMany({
+          where: { name: lineName },
+          orderBy: { id: "desc" },
+          take: 1,
+        });
+      }
+  
+      // ถ้ามีข้อมูลจากฐานข้อมูล ให้นำข้อมูลจาก element แรกใน array มาใช้
+      if (lineUserData && lineUserData.length > 0) {
+        lineNameinsert = lineUserData[0].name;
+        lineLineIdinsert = lineUserData[0].comment_id;
+      }
     }
 
     // สร้าง QR Code หากมีข้อมูล lineUser

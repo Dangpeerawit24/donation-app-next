@@ -85,3 +85,22 @@ model Topic {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt()
 }
+
+model Fb_comment { 
+  id          Int     @id @default(autoincrement())
+  fb_id       String
+  name        String  @db.VarChar(255)
+  comment_id  String  @db.VarChar(255)
+  message     String  @db.VarChar(255)
+  createdAt DateTime @default(now()) 
+  updatedAt DateTime @updatedAt()
+}
+
+model Fb_message { 
+  id      Int     @id @default(autoincrement())
+  fb_id   String
+  name    String  @db.VarChar(255)
+  message String  @db.VarChar(255)
+  createdAt DateTime @default(now()) 
+  updatedAt DateTime @updatedAt()
+}
