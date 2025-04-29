@@ -15,6 +15,7 @@ import * as XLSX from "xlsx";
 import axios from "axios";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+const webhhokfbuser = process.env.NEXT_PUBLIC_WEBHOOK_FBUSER_URL;
 
 export default function CampaignDetail() {
   const { data: session, status } = useSession();
@@ -41,6 +42,15 @@ export default function CampaignDetail() {
     try {
       const respond = await axios.get(`/api/campaign-transactions?id=${id}`)
       setCampaigns(respond.data);
+    } catch (error) {
+      console.error("เกิดข้อผิดพลาดในการดึงข้อมูลสมาชิก:", error);
+    }
+  };
+
+  const updateFbUser = async () => {
+    try {
+      const response = await axios.get(webhhokfbuser)
+      console.log(response.data);
     } catch (error) {
       console.error("เกิดข้อผิดพลาดในการดึงข้อมูลสมาชิก:", error);
     }
@@ -143,6 +153,9 @@ export default function CampaignDetail() {
   }
 
   const handleAddUser = async () => {
+
+    updateFbUser();
+
     const { value: formValues } = await Swal.fire({
       title: "เพิ่มรายการร่วมบุญ",
       html: `
