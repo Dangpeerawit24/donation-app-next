@@ -145,6 +145,8 @@ const PushImages = () => {
       urltopush = "/api/line/pushimages/fb/message";
     } else if (transactionData.form === "P") {
       urltopush = "/api/line/pushimages/fb/comment";
+    } else if (transactionData.form === "A") {
+      urltopush = "/api/line/pushimages";
     }
 
     try {
