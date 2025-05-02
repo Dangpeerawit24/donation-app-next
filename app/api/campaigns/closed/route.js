@@ -21,7 +21,7 @@ export async function GET() {
   LEFT JOIN Campaign_transactions ct ON c.id = ct.campaignsid
   WHERE c.status = 'ปิดกองบุญแล้ว'
   GROUP BY c.id
-  ORDER BY c.created_at DESC
+  ORDER BY c.createdAt DESC
       `;
 
   return NextResponse.json(campaigns);
