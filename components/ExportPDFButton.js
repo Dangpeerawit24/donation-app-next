@@ -25,22 +25,22 @@ const ExportPDF = ({ data }) => {
 
       doc.setFontSize(16);
 
-      const lines = doc.splitTextToSize(name, 4.2); // จำกัดความกว้างให้พอดีช่อง
+      // ✅ ขยายความกว้างให้ใช้พื้นที่เต็ม (ลบเส้นกลางแล้ว)
+      const lines = doc.splitTextToSize(name, 5.2); // เดิม 4.2 ตอนมีเส้นกลาง
 
-      // ✅ คำนวณจัดข้อความให้อยู่กึ่งกลางแนวตั้ง
-      const lineHeight = 0.6; // ปรับตามขนาด font
+      // ✅ คำนวณจัดกลางแนวตั้ง
+      const lineHeight = 0.6;
       const totalHeight = lines.length * lineHeight;
       const startY = 0.2 + (3.6 - totalHeight) / 2;
 
-      // ✅ วาดข้อความแบบจัดกึ่งกลางแนวนอน
+      // ✅ จัดกึ่งกลางแนวนอน (ใช้ 3.0 เพราะกึ่งกลางของกรอบ 5.6 cm)
       lines.forEach((line, i) => {
-        doc.text(line, 2.3, startY + i * lineHeight, { align: "center" }); // 2.3 คือกึ่งกลางแนวนอนของช่องซ้าย (0.2 ถึง 4.5)
+        doc.text(line, 3.0, startY + i * lineHeight, { align: "center" });
       });
 
-      // ✅ วาดกรอบและเส้นแบ่ง
+      // ✅ วาดกรอบ (ไม่มีเส้นแบ่งแล้ว)
       doc.setLineWidth(0.1);
-      doc.rect(0.2, 0.2, 5.6, 3.6); // กรอบรอบนอก
-      doc.line(4.5, 0.2, 4.5, 3.8); // เส้นแบ่งซ้าย-ขวา
+      doc.rect(0.2, 0.2, 5.6, 3.6); // กรอบเต็มพื้นที่
     });
 
     doc.save("รายชื่อ.pdf");
