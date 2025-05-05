@@ -18,7 +18,7 @@ const ExportPDF = ({ data }) => {
     data.forEach((item, index) => {
       if (index > 0) doc.addPage();
 
-      const name = item.detailsname || "ไม่ระบุชื่อ";
+      const name = item.detailsname || item.details || "ไม่ระบุชื่อ";
 
       doc.setFontSize(16);
       doc.text(name, 3, 2, { align: 'center' });
