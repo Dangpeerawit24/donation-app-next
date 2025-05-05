@@ -13,6 +13,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import Image from "next/image";
 import * as XLSX from "xlsx";
 import axios from "axios";
+import ExportPDF from '@/components/ExportPDFButton';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 const webhhokfbuser = process.env.NEXT_PUBLIC_WEBHOOK_FBUSER_URL;
@@ -467,6 +468,7 @@ export default function CampaignDetail() {
           <div className="md:flex gap-2">
             <button onClick={copyTable} className="px-4 py-2 hidden md:block bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">คัดลอกข้อมูลในตาราง</button>
             <button onClick={exportToExcel} className="px-4 py-2 hidden md:block bg-blue-500 text-white rounded-lg hover:bg-blue-600">บันทึกเป็น Excel</button>
+            < ExportPDF data={campaigns} />
             <button
               onClick={() =>
                 (window.location.href = `/admin/manage-campaign/campaign-detail-succeed/${namecampaign.id}`)
