@@ -90,7 +90,7 @@ export async function POST(req) {
 
     // ส่ง push message ผ่าน LINE API หาก pushmessage > 0
     if (pushmessage && Number(pushmessage) > 0) {
-      const facebookAccessToken = process.env.NEXT_PUBLIC_FACEBOOK_MESSAGE_TOKEN;
+      const facebookAccessToken = process.env.NEXT_PUBLIC_FACEBOOK_PAGE_TOKEN;
       // ส่งรูปภาพทีละภาพ
       for (const imageUrl of imageUrls) {
         await fetch("https://graph.facebook.com/v22.0/me/messages", {
@@ -101,7 +101,7 @@ export async function POST(req) {
           },
           body: JSON.stringify({
             recipient: {
-              id: userid, // อย่าลืมประกาศค่า userid ให้เรียบร้อย
+              id: userid,
             },
             message: {
               attachment: {
@@ -109,9 +109,11 @@ export async function POST(req) {
                 payload: {
                   url: process.env.NEXT_PUBLIC_BASE_URL + imageUrl,
                   is_reusable: true,
-                },
-              },
+                }
+              }
             },
+            tag: "POST_PURCHASE_UPDATE",
+            messaging_type: "MESSAGE_TAG"
           }),
         });        
       }

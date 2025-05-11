@@ -155,10 +155,7 @@ const PushImages = () => {
         body: formData,
       });
 
-      if (!res.ok) {
-        throw new Error("Network response was not ok");
-      }
-
+      if (res.status === 201) {
       Swal.fire({
         icon: "success",
         title: "สำเร็จ",
@@ -169,6 +166,7 @@ const PushImages = () => {
       }).then(() => {
         window.location.href = `/admin/manage-campaign/campaign-detail/${transactionData.campaignsid}`;
       });
+      }
     } catch (error) {
       console.error("Error:", error);
       Swal.fire({
